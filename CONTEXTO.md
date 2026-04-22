@@ -1,7 +1,3 @@
-# Nombre tienda
-
-## Descripción general
-
 # Caso de Estudio: Transformación Digital de “VetDistribuidora SPA”
 
 ## Introducción
