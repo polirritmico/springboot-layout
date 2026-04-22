@@ -25,11 +25,33 @@ The application is going to use a Microservice architecture. This are the
 current microservices with they descriptions.
 
 ```mermaid
-graph TD
-    Users[Users Service]
-    Auth[Authentication Service]
-    Sales[Sales Service]
-    Invoices[Invoices Service]
+graph BT
+    subgraph MicroServ [Microservices]
+        U[1. Users]
+        A[2. Authentication]
+        S[3. Sales]
+        I[4. Invoices]
+        M[5. Mails]
+        P[6. Products]
+        R[7. Reports]
+        E[8. Exporter]
+    end
+
+    O[0. Orchestrator]
+
+    C[👤 Customer]
+    FE[🖥️ Front End]
+
+    C --> FE
+    FE ===> |API| O
+    O ---o U
+    O ---o A
+    O ---o S
+    O ---o I
+    O ---o M
+    O ---o P
+    O ---o R
+    O ---o E
 ```
 
 ### Users
