@@ -33,6 +33,63 @@ microservices to unify workflows between developers.
    [Google Java Formatter](https://github.com/google/google-java-format): Code
    autoformatter for consistent code style.
 
+## Standarization
+
+### Project Metadata
+
+- The microservice name should begin with `Microservice`. For example:
+  `MicroserviceFoo`.
+- The **group** should begin with `cl.duoc`.
+- The **artifact** should be lowercase letters only, avoid spaces and use `-`.
+
+### Naming conventions
+
+#### Tables
+
+- Table names & columns should be in `snake_case`.
+- Table names should be in plural
+
+#### Classes/Entities
+
+There's no enforcement on the microservice code names or approaches. Just the
+following suggestions:
+
+| Type                   | Recommendation                                                    | Examples                                                            |
+| ---------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Entities               | Singular                                                          | User, Payment                                                       |
+| Services               | Singular                                                          | UserService, PaymentService                                         |
+| Repositories           | Singular                                                          | UserRepository, PaymentRepository                                   |
+| Controllers            | Singular                                                          | UserController, PaymentController                                   |
+| Collections / Wrappers | Plural only if contain multiple items                             | Payments, UserList                                                  |
+| Exceptions             | Singular. Should end with `Exception`                             | InvalidPaymentException, UnauthorizedRequestException               |
+| DTOs                   | Singular. Plural only if the DTO itself is a collection container | CreateUserRequest, UserResponse, SaleSummaryResponse, SalesResponse |
+
+### API / Endpoints
+
+The project follows the
+[RESTful API standard](https://cloud.google.com/discover/what-is-rest-api).
+
+- Every microservice should prefix endpoints with `/api/v1/` (or the
+  corresponding version).
+- Use **plural resource names** in paths. For example: `/api/v1/users`,
+  `/api/v1/sales`.
+- Use **HTTP methods to express actions**; avoid verbs in URLs.
+
+#### Standard patterns
+
+| Action        | Method | Endpoint             |
+| ------------- | ------ | -------------------- |
+| Get all       | GET    | `/api/v1/users`      |
+| Get one       | GET    | `/api/v1/users/{id}` |
+| Create        | POST   | `/api/v1/users`      |
+| Update (full) | PUT    | `/api/v1/users/{id}` |
+| Update (part) | PATCH  | `/api/v1/users/{id}` |
+| Delete        | DELETE | `/api/v1/users/{id}` |
+
+- Avoid endpoints like `/get-all`, `/add`, `/delete`.
+- Use **nouns for resources**, not actions.
+- Keep paths **lowercase and `kebab-case`** if needed (`/order-items`).
+
 ---
 
 ## Project setup
@@ -136,12 +193,17 @@ ready code lives in `main`.
 The application uses a Microservice architecture. This are the current
 microservices with they descriptions.
 
-## Components
+## Microservices
+
+| Name              | URL Repository                             | Description        |
+| ----------------- | ------------------------------------------ | ------------------ |
+| MicroserviceSales | [github](https://github.com/polirritmico/) | Handle sales logic |
+
+## Architecture microservice diagram
 
 ```mermaid
 graph LR
-    C[👤 Customer] --> FE[🖥️ Front]
-    FE ==> O[0. Gateway]
+    C[👤 Customer/Front] ==> O[0. Gateway]
 
     subgraph MicroServ [Microservices]
         direction TB
