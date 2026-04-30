@@ -186,6 +186,40 @@ during the Maven build, ensuring consistent style across all environments.
 The project follows a trunk-based workflow on the `develop` branch. Production
 ready code lives in `main`.
 
+### Git commit messages
+
+The project adheres to the
+[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+specification.
+
+- Use the format:
+
+  ```
+  <type>(<scope>): <subject>
+  ```
+
+  For example:
+
+  ```
+  feat(UserService): add non-duplicated username validation check
+  ```
+
+- Common types:
+  - `feat`: new feature
+  - `fix`: bug fix
+  - `refactor`: code change without behavior change
+  - `docs`: documentation only
+  - `chore`: maintenance tasks
+  - `test`: adding or updating tests
+
+- Keep the **subject line ≤ 72 characters**
+  - Use imperative mood (e.g., “add”, not “added”)
+  - Do not end with a period
+  - Use `&` instead `and`
+
+Optional body allowed but wrap lines at 72 characters. Explain _what_ and _why_,
+not _how_.
+
 ---
 
 ## Design
