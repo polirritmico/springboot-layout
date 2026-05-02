@@ -35,6 +35,11 @@ microservices to unify workflows between developers.
 
 ## Standarization
 
+### Generals
+
+- Project code should be written in English. Temporal comments or notes could be
+  in Spanish.
+
 ### Project Metadata
 
 - The microservice name should end with `Microservice`. For example:
@@ -186,7 +191,18 @@ during the Maven build, ensuring consistent style across all environments.
 The project follows a trunk-based workflow on the `develop` branch. Production
 ready code lives in `main`.
 
-### Git commit messages
+### 🔀 Git
+
+#### Branches
+
+- **dev:** Development branch. All development work and commits should go into
+  the `dev` branch.
+- **main:** Main branch. Only production-ready code should be merged from `dev`
+  into the `main` branch.
+- Other branches are allowed but should be short-lived (a few days at max).
+  Development should mainly happen in the `dev` branch.
+
+#### Commit messages
 
 The project adheres to the
 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
