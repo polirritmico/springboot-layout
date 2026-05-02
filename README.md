@@ -47,10 +47,12 @@ microservices to unify workflows between developers.
 
 ### Project Metadata
 
-- The microservice name should end with `Microservice`. For example:
+- The microservice app name should end with `Microservice`. For example:
   `FooMicroservice`.
-- The **group** should begin with `cl.duoc`.
-- The **artifact** should be lowercase letters only, avoid spaces and use `-`.
+- Maven metadata:
+  - The **group** should begin with `cl.duoc`.
+  - The **artifact** should use lowercase letters only, avoid spaces and use `-`
+    instead.
 
 ### Naming conventions
 
