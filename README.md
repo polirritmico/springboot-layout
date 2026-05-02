@@ -142,10 +142,14 @@ Add the plugin into the project's `pom.xml` file:
 ```xml
     <build>
         <plugins>
+
             <plugin>
                 <groupId>com.spotify.fmt</groupId>
                 <artifactId>fmt-maven-plugin</artifactId>
                 <version>2.29</version>
+                <configuration>
+                  <style>aosp</style>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -161,6 +165,7 @@ Add the plugin into the project's `pom.xml` file:
                     </dependency>
                 </dependencies>
             </plugin>
+
         </plugins>
     </build>
 ```
