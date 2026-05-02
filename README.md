@@ -198,20 +198,24 @@ ready code lives in `main`.
 
 ### 🔀 Git
 
+#### Repository
+
+- The repository name should follow this style: `foo-microservice`.
+
 #### Branches
 
 - **dev:** Development branch. All development work and commits should go into
   the `dev` branch.
-- **main:** Main branch. Only production-ready code should be merged from `dev`
-  into the `main` branch.
-- Other branches are allowed but should be short-lived (a few days at max).
+- **main:** Main branch. **Only production-ready code** should be merged from
+  `dev` into the `main` branch.
+- Other branches are allowed but should be short-lived (a few days at most).
   Development should mainly happen in the `dev` branch.
 
 #### Commit messages
 
-The project adheres to the
-[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
-specification.
+- The project adheres to the
+  [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+  specification.
 
 - Use the format:
 
