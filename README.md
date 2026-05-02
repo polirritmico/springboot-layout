@@ -205,7 +205,10 @@ ready code lives in `main`.
 
 #### Repository
 
+- Each microservice should live in its own repository.
 - The repository name should follow this style: `foo-microservice`.
+- Each repository should grant write access to all members of the development
+  team.
 
 #### Branches
 
