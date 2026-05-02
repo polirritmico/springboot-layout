@@ -37,8 +37,8 @@ microservices to unify workflows between developers.
 
 ### Project Metadata
 
-- The microservice name should begin with `Microservice`. For example:
-  `MicroserviceFoo`.
+- The microservice name should end with `Microservice`. For example:
+  `FooMicroservice`.
 - The **group** should begin with `cl.duoc`.
 - The **artifact** should be lowercase letters only, avoid spaces and use `-`.
 
@@ -229,9 +229,9 @@ microservices with they descriptions.
 
 ## Microservices
 
-| Name              | URL Repository                             | Description        |
-| ----------------- | ------------------------------------------ | ------------------ |
-| MicroserviceSales | [github](https://github.com/polirritmico/) | Handle sales logic |
+| Name              | Repository                               | Description        |
+| ----------------- | ---------------------------------------- | ------------------ |
+| SalesMicroservice | [link](https://github.com/polirritmico/) | Handle sales logic |
 
 ## Architecture microservice diagram
 
@@ -260,3 +260,7 @@ graph LR
     O ---o R
     O ---o E
 ```
+
+---
+
+**_Happy codding!_** ☕
