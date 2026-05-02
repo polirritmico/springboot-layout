@@ -35,10 +35,15 @@ microservices to unify workflows between developers.
 
 ## Standarization
 
-### Generals
+### General
 
-- Project code should be written in English. Temporal comments or notes could be
-  in Spanish.
+- Project code should be written in English. Temporary comments or notes may be
+  written in Spanish.
+
+  > [!NOTE]
+  >
+  > The only exception to this rule applies to domain-specific terms that must
+  > match external systems, such as legal or tax-related fields.
 
 ### Project Metadata
 
