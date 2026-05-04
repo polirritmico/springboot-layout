@@ -29,9 +29,9 @@ microservices to unify workflows between developers.
 6. **Spring Data JPA:** ORM
 7. **Driver Mysql:** Handles the DB connection
 8. **Flyway Migration:** DB migrations
-9. [fmt-maven-plugin](https://github.com/spotify/fmt-maven-plugin) and
-   [Google Java Formatter](https://github.com/google/google-java-format): Code
-   autoformatter for consistent code style.
+9. [Spotless Maven](https://github.com/diffplug/spotless/blob/main/plugin-maven/README.md#java)
+   and [Google Java Formatter](https://github.com/google/google-java-format):
+   Code autoformatter for consistent code style.
 
 ## Standarization
 
@@ -138,7 +138,6 @@ And also copy the Spring Boot properties files to the corresponding paths:
 3. Check the db status through the provided **phpmyadmin** service and put the
    defined credentials:
    - Go to [http://localhost:8088](http://localhost:8088)
-   - Use the defined credentials. By default:
      - **User:** `user`
      - **Password:** `password`
 
@@ -149,49 +148,41 @@ Add the plugin into the project's `pom.xml` file:
 ```xml
 	<build>
 		<plugins>
-
-			<plugin>
-				<groupId>com.spotify.fmt</groupId>
-				<artifactId>fmt-maven-plugin</artifactId>
-				<version>2.29</version>
-				<configuration>
-				  <style>aosp</style>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>format</goal>
-						</goals>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>com.google.googlejavaformat</groupId>
-						<artifactId>google-java-format</artifactId>
-						<version>1.35.0</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-
 			<plugin>
 				<groupId>com.diffplug.spotless</groupId>
 				<artifactId>spotless-maven-plugin</artifactId>
 				<version>2.43.0</version>
 				<configuration>
+					<java>
+						<licenseHeader>
+							<content><![CDATA[/*
+								* Copyright © $YEAR DuocUC FullStack 1
+								* Eduardo Bray
+								* Rodrigo Callealta
+								* Fernando Villalobos
+								*/
+								]]></content>
+						</licenseHeader>
+						<googleJavaFormat>
+							<version>1.35.0</version>
+							<style>AOSP</style>
+							<reflowLongStrings>true</reflowLongStrings>
+						</googleJavaFormat>
+					</java>
 					<formats>
 						<format>
 							<includes>
 								<include>**/*.properties</include>
 							</includes>
-							<trimTrailingWhitespace/>
-							<endWithNewline/>
+							<trimTrailingWhitespace />
+							<endWithNewline />
 						</format>
 						<format>
 							<includes>
 								<include>**/*.md</include>
 							</includes>
-							<trimTrailingWhitespace/>
-							<endWithNewline/>
+							<trimTrailingWhitespace />
+							<endWithNewline />
 						</format>
 						<format>
 							<includes>
@@ -201,33 +192,33 @@ Add the plugin into the project's `pom.xml` file:
 								<spaces>true</spaces>
 								<spacesPerTab>2</spacesPerTab>
 							</indent>
-							<trimTrailingWhitespace/>
-							<endWithNewline/>
+							<trimTrailingWhitespace />
+							<endWithNewline />
+						</format>
+						<format>
+							<includes>
+								<include>pom.xml</include>
+								<include>**/*.xml</include>
+							</includes>
+							<eclipseWtp>
+								<type>XML</type>
+							</eclipseWtp>
+							<indent>
+								<tabs>true</tabs>
+								<spacesPerTab>4</spacesPerTab>
+							</indent>
 						</format>
 					</formats>
-					<xml>
-						<includes>
-							<include>**/*.xml</include>
-						</includes>
-						<eclipseWtp>
-							<type>XML</type>
-						</eclipseWtp>
-						<indent>
-							<tabs>true</tabs>
-							<spacesPerTab>4</spacesPerTab>
-						</indent>
-					</xml>
 				</configuration>
 				<executions>
 					<execution>
 						<goals>
 							<goal>apply</goal>
 						</goals>
-						<phase>process-sources</phase>
+						<phase>validate</phase>
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 ```
