@@ -163,11 +163,11 @@ Add the plugin into the project's `pom.xml` file:
 								*/
 								]]></content>
 						</licenseHeader>
-						<googleJavaFormat>
-							<version>1.35.0</version>
-							<style>AOSP</style>
-							<reflowLongStrings>true</reflowLongStrings>
-						</googleJavaFormat>
+						<palantirJavaFormat>
+							<version>2.90.0</version>
+							<style>PALANTIR</style>
+							<formatJavadoc>true</formatJavadoc>
+						</palantirJavaFormat>
 					</java>
 					<formats>
 						<format>
