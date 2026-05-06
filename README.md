@@ -310,9 +310,10 @@ microservices with they descriptions.
 
 ## Microservices
 
-| Name              | Repository                               | Description        |
-| ----------------- | ---------------------------------------- | ------------------ |
-| SalesMicroservice | [link](https://github.com/polirritmico/) | Handle sales logic |
+| Name                | Repository                                                 | Description            |
+| ------------------- | ---------------------------------------------------------- | ---------------------- |
+| SalesMicroservice   | [link](https://github.com/polirritmico/sales-microservice) | Handle sales logic     |
+| InvoiceMicroservice | [link](https://github.com/fervivi/invoice-microservice)    | Generates billing docs |
 
 ## Architecture microservice diagram
 
@@ -323,23 +324,27 @@ graph LR
     subgraph MicroServ [Microservices]
         direction TB
         U["1. Users<br/>(Manages user profiles)"]
-        A["2. Authentication<br/>(Handles login & security)"]
+        Au["2. Authentication<br/>(Handles login & security)"]
         S["3. Sales<br/>(Processes cart orders)"]
         I["4. Invoices<br/>(Generates billing docs)"]
         M["5. Mails<br/>(Sends notifications)"]
-        P["6. Products<br/>(Maintains catalog)"]
-        R["7. Reports<br/>(Aggregates analytics)"]
-        E["8. Exporter<br/>(Handles data dumps)"]
+        Pr["6. Products<br/>(Maintains catalog)"]
+        An["7. Animals<br/>(Maintains animal catalog)"]
+        R["8. Reports<br/>(Aggregates analytics)"]
+        E["9. Exporter<br/>(Handles data dumps)"]
+        Pa["10. Payments<br/>(Handles user payments)"]
     end
 
     O ---o U
-    O ---o A
+    O ---o Au
     O ---o S
     O ---o I
     O ---o M
-    O ---o P
+    O ---o An
+    O ---o Pr
     O ---o R
     O ---o E
+    O ---o Pa
 ```
 
 ---
