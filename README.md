@@ -254,7 +254,7 @@ ready code lives in `main`.
 #### Repository
 
 - Each microservice should live in its own repository.
-- The repository name should follow this style: `foo-microservice`.
+- The repository name should follow this style: `foo-api`.
 - Each repository should grant write access to all members of the development
   team.
 
@@ -310,10 +310,10 @@ microservices with they descriptions.
 
 ## Microservices
 
-| Name                | Repository                                                 | Description            |
-| ------------------- | ---------------------------------------------------------- | ---------------------- |
-| SalesMicroservice   | [link](https://github.com/polirritmico/sales-microservice) | Handle sales logic     |
-| InvoiceMicroservice | [link](https://github.com/fervivi/invoice-microservice)    | Generates billing docs |
+| Name                | Repository                                        | Description            |
+| ------------------- | ------------------------------------------------- | ---------------------- |
+| SalesMicroservice   | [link](https://github.com/polirritmico/sales-api) | Handle sales logic     |
+| InvoiceMicroservice | [link](https://github.com/fervivi/invoice-api)    | Generates billing docs |
 
 ## Architecture microservice diagram
 
