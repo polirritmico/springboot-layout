@@ -1,5 +1,7 @@
 # Caso de Estudio: Transformación Digital de “VetDistribuidora SPA”
 
+<img width="1024" height="559" alt="logo" src="https://github.com/user-attachments/assets/774c4b22-4b82-4182-8b3b-3776df5ff7bd" />
+
 ## Introducción
 
 VetDistribuidora SPA es una empresa chilena en crecimiento dedicada a la **venta
