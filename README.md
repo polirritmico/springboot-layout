@@ -312,10 +312,20 @@ microservices with they descriptions.
 
 ## Microservices
 
-| Name                | Repository                                        | Description            |
-| ------------------- | ------------------------------------------------- | ---------------------- |
-| SalesMicroservice   | [link](https://github.com/polirritmico/sales-api) | Handle sales logic     |
-| InvoiceMicroservice | [link](https://github.com/fervivi/invoice-api)    | Generates billing docs |
+| Name              | Repository                                                            | Domain     | Description            |
+| ----------------- | --------------------------------------------------------------------- | ---------- | ---------------------- |
+| Auth              | ToDo                                                                  | System     | Generates billing docs |
+| Users             | ToDo                                                                  | System     |                        |
+| Sales             | [polirritmico/sales-api](https://github.com/polirritmico/sales-api)   | Accounting | Handle sales data      |
+| Invoice           | [Fervivi/invoice-api](https://github.com/Fervivi/invoice-api)         | Accounting | Invoice management     |
+| AccountingManager | ToDo                                                                  | Accounting |                        |
+| Carts             | ToDo                                                                  | Store      |                        |
+| Products          | ToDo                                                                  | Store      |                        |
+| StoreManager      | ToDo                                                                  | Store      |                        |
+| Pets              | [lironscallealta/invoice-api](https://github.com/Fervivi/invoice-api) | Clinic     | Generates billing docs |
+| Appoinments       | ToDo                                                                  | Clinic     |                        |
+| Veterinarian      | ToDo                                                                  | Clinic     |                        |
+| VetManager        | ToDo                                                                  | Clinic     |                        |
 
 ## Architecture microservice diagram
 
