@@ -112,7 +112,11 @@ Copy the following files into the project root directory:
 
 - `.env.example`
 - `.gitignore`
+- `.gitattributes`
 - `compose.yml`
+
+Adapt the `.env.example` if is needed (check the `SPRING_APP_NAME` and
+`MYSQL_DATABASE` variables).
 
 And also copy the Spring Boot properties files to the corresponding paths:
 
@@ -233,13 +237,13 @@ plugin.
 Run this to format the codebase through the CLI:
 
 ```bash
-./mvnw fmt:format
+./mvnw spotless:apply
 ```
 
 #### IDE
 
 A
-[google-java-format](https://marketplace.visualstudio.com/items?itemName=JoseVSeb.google-java-format-for-vs-code)
+[palantir-java-format](https://marketplace.visualstudio.com/items?itemName=szykk1993.palantir-java-format)
 plugin/extension is available for VSCode and can be installed to format code on
 save.
 
@@ -248,8 +252,8 @@ during the Maven build, ensuring consistent style across all environments.
 
 ## 🏗️ Development workflow
 
-The project follows a trunk-based workflow on the `develop` branch. Production
-ready code lives in `main`.
+The project follows a trunk-based workflow on the `dev` branch. Production ready
+code lives in `main`.
 
 ### 🔀 Git
 
@@ -327,37 +331,9 @@ microservices with they descriptions.
 | Veterinarian      | ToDo                                                                  | Clinic     |                        |
 | VetManager        | ToDo                                                                  | Clinic     |                        |
 
-## Architecture microservice diagram
+## Microservices Interaction Architecture Diagram
 
-```mermaid
-graph LR
-    C[👤 Customer/Front] ==> O[0. Gateway]
-
-    subgraph MicroServ [Microservices]
-        direction TB
-        U["1. Users<br/>(Manages user profiles)"]
-        Au["2. Authentication<br/>(Handles login & security)"]
-        S["3. Sales<br/>(Processes cart orders)"]
-        I["4. Invoices<br/>(Generates billing docs)"]
-        M["5. Mails<br/>(Sends notifications)"]
-        Pr["6. Products<br/>(Maintains catalog)"]
-        An["7. Animals<br/>(Maintains animal catalog)"]
-        R["8. Reports<br/>(Aggregates analytics)"]
-        E["9. Exporter<br/>(Handles data dumps)"]
-        Pa["10. Payments<br/>(Handles user payments)"]
-    end
-
-    O ---o U
-    O ---o Au
-    O ---o S
-    O ---o I
-    O ---o M
-    O ---o An
-    O ---o Pr
-    O ---o R
-    O ---o E
-    O ---o Pa
-```
+<img width="1994" height="1600" alt="architecture_v1" src="https://github.com/user-attachments/assets/e6ad8770-021e-465f-bfa1-4fae5c6693e4" />
 
 ---
 
