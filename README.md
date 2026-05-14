@@ -29,9 +29,11 @@ microservices to unify workflows between developers.
 6. **Spring Data JPA:** ORM
 7. **Driver Mysql:** Handles the DB connection
 8. **Flyway Migration:** DB migrations
-9. [Spotless Maven](https://github.com/diffplug/spotless/blob/main/plugin-maven/README.md#java)
-   and [Google Java Formatter](https://github.com/google/google-java-format):
-   Code autoformatter for consistent code style.
+9. **Spring Reactive Web:** Provides HTTP requests capabilities
+10. **Spring Security:** Provides authentication and access-control capabilities
+11. [Spotless Maven](https://github.com/diffplug/spotless/blob/main/plugin-maven/README.md#java)
+    and [Google Java Formatter](https://github.com/google/google-java-format):
+    Code autoformatter for consistent code style.
 
 ## Standarization
 
