@@ -84,8 +84,6 @@ build/
 *.jpg
 *.png
 *.webp
-*.zip
-*.rar
 *.xlsx
 *.pdf
 *.xls
