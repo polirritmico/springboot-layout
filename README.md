@@ -206,6 +206,10 @@ Add the plugin into the project's `pom.xml` file:
 								<include>pom.xml</include>
 								<include>**/*.xml</include>
 							</includes>
+							<excludes>
+								<exclude>**/logback-spring.xml</exclude>
+							</excludes>
+
 							<eclipseWtp>
 								<type>XML</type>
 							</eclipseWtp>
