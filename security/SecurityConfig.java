@@ -21,14 +21,16 @@ public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
 
     @Value("${jwt.public}")
-    private String PUBLIC;
+    private String[] publicPaths;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(PUBLIC).permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth.requestMatchers(publicPaths)
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
