@@ -1,4 +1,4 @@
-# gitignore v0.3
+# gitignore v0.4
 
 # Compiled class file
 *.class
@@ -79,7 +79,24 @@ build/
 # IOS
 .DS_Store
 
+# binaries
+*.jpeg
+*.jpg
+*.png
+*.webp
+*.zip
+*.rar
+*.xlsx
+*.pdf
+*.xls
+*.xlsx
+*.ppt
+*.pptx
+*.doc
+*.docx
+
 # -----------------------------------------------------------------------------
 # Project ignores
 
+logs/*
 .env
