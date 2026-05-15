@@ -10,6 +10,8 @@ El backend de nuestra aplicación está dividido en 4 dominios principales:
 La arquitectura sigue un enfoque de **microservicios de dominio** orquestados
 por una capa de aplicación (_managers_).
 
+<img width="1994" height="1600" alt="architecture_v1" src="https://github.com/user-attachments/assets/e6ad8770-021e-465f-bfa1-4fae5c6693e4" />
+
 A continuación el detalle de cada uno:
 
 ## Dominio clínico
