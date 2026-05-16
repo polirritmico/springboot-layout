@@ -76,3 +76,32 @@ Solicita los turnos a `Veterinarians` y solicita a `Appointments` pasándole los
 turnos, para que los cruce internamente con las citas agendadas de la BD y
 retornar los bloques de horario disponibles de vuelta al `VetManager` que envía
 la respuesta al front.
+
+## Dominio de sistema
+
+El principio más importante de diseño para mantener ambos servicios desacoplados
+es que **Auth** se encargue de manejar los contextos de seguridad mientras
+**Users** se encarga de manejar las entidades de dominio. La única interfaz de
+conexión entre ambos debe ser el identificador único que se transporta en el
+token.
+
+### Microservicio Auth
+
+Un "cuartel" aislado de seguridad. No le interesa la lógica de negocio, se
+encarga exclusivamente de la validación de accesos y la emisión de tokens.
+
+Modelos principales:
+
+- RefreshToken: Gestiona la vigencia y revocación de las sesiones activas.
+- Credentials: Datos de ingreso y verificación necesarios para validar la
+  cuenta.
+
+### Microservicio User
+
+Plantea al usuario como entidad fundamental del negocio. Se centra en quién es
+el usuario dentro del sistema de la aplicación.
+
+Modelos principales:
+
+- User: Entidad de negocio con los datos de identidad de los usuarios,
+  información de contacto y atributos del perfil.
