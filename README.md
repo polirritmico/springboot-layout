@@ -254,6 +254,18 @@ save.
 However, no IDE configuration is required. Formatting is enforced automatically
 during the Maven build, ensuring consistent style across all environments.
 
+### Logs
+
+Add the dependency to the `pom.xml` file.
+
+```xml
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>7.4</version>
+		</dependency>
+```
+
 ## 🏗️ Development workflow
 
 The project follows a trunk-based workflow on the `dev` branch. Production ready
