@@ -320,20 +320,20 @@ microservices with they descriptions.
 
 ## Microservices
 
-| Name              | Repository                                                            | Domain     | Description            |
-| ----------------- | --------------------------------------------------------------------- | ---------- | ---------------------- |
-| Auth              | ToDo                                                                  | System     | Generates billing docs |
-| Users             | ToDo                                                                  | System     |                        |
-| Sales             | [polirritmico/sales-api](https://github.com/polirritmico/sales-api)   | Accounting | Handle sales data      |
-| Invoice           | [Fervivi/invoice-api](https://github.com/Fervivi/invoice-api)         | Accounting | Invoice management     |
-| AccountingManager | ToDo                                                                  | Accounting |                        |
-| Carts             | ToDo                                                                  | Store      |                        |
-| Products          | ToDo                                                                  | Store      |                        |
-| StoreManager      | ToDo                                                                  | Store      |                        |
-| Pets              | [lironscallealta/invoice-api](https://github.com/Fervivi/invoice-api) | Clinic     | Generates billing docs |
-| Appoinments       | ToDo                                                                  | Clinic     |                        |
-| Veterinarian      | ToDo                                                                  | Clinic     |                        |
-| VetManager        | ToDo                                                                  | Clinic     |                        |
+| Name              | Repository                                                            | Domain     | Description                                   |
+| ----------------- | --------------------------------------------------------------------- | ---------- | --------------------------------------------- |
+| Auth              | [polirritmico/auth-api](https://github.com/polirritmico/auth-api)     | System     | Handle user authentication & provides the JWT |
+| Users             | ToDo                                                                  | System     |                                               |
+| Sales             | [polirritmico/sales-api](https://github.com/polirritmico/sales-api)   | Accounting | Handle sales data                             |
+| Invoice           | [Fervivi/invoice-api](https://github.com/Fervivi/invoice-api)         | Accounting | Invoice management                            |
+| AccountingManager | ToDo                                                                  | Accounting |                                               |
+| Carts             | ToDo                                                                  | Store      |                                               |
+| Products          | ToDo                                                                  | Store      |                                               |
+| StoreManager      | ToDo                                                                  | Store      |                                               |
+| Pets              | [lironscallealta/invoice-api](https://github.com/Fervivi/invoice-api) | Clinic     | Generates billing docs                        |
+| Appoinments       | ToDo                                                                  | Clinic     |                                               |
+| Veterinarian      | ToDo                                                                  | Clinic     |                                               |
+| VetManager        | ToDo                                                                  | Clinic     |                                               |
 
 ## Microservices Interaction Architecture Diagram
 
