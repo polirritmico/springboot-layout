@@ -32,7 +32,8 @@ microservices to unify workflows between developers.
 9. **Spring Reactive Web:** Provides HTTP requests capabilities
 10. **Spring Security:** Provides authentication and access-control capabilities
 11. [Spotless Maven](https://github.com/diffplug/spotless/blob/main/plugin-maven/README.md#java)
-    and [Google Java Formatter](https://github.com/google/google-java-format):
+    and
+    [Palantir java format](https://marketplace.visualstudio.com/items?itemName=szykk1993.palantir-java-format):
     Code autoformatter for consistent code style.
 
 ## Standarization
