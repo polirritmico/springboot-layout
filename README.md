@@ -187,7 +187,7 @@ microservices with they descriptions.
 | Invoice           | [Fervivi/invoice-api](https://github.com/Fervivi/invoice-api)         | Accounting | Invoice management                            |
 | AccountingManager | ToDo                                                                  | Accounting |                                               |
 | Carts             | ToDo                                                                  | Store      |                                               |
-| Products          | ToDo                                                                  | Store      |                                               |
+| Products          | [Fervivi/product-api](https://github.com/Fervivi/product-api)         | Store      | Manage product catalog                                                          | Store      |                                               |
 | StoreManager      | ToDo                                                                  | Store      |                                               |
 | Pets              | [lironscallealta/invoice-api](https://github.com/Fervivi/invoice-api) | Clinic     | Generates billing docs                        |
 | Appoinments       | ToDo                                                                  | Clinic     |                                               |
