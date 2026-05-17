@@ -6,6 +6,196 @@ This repository provides a configuration layout for each microservice of the
 project. The idea is to apply the provided settings and files into all the
 microservices to unify workflows between developers.
 
+> [!IMPORTANT]
+>
+> **Too long; didn't read:**
+>
+> This is the step-by-step setup:
+>
+> <details>
+> <summary> Click to expand </summary>
+>
+> 1. Name the repo like this: `foo-api` (prefer plural)
+> 2. With the initializr:
+>    1. Set the project to:
+>       - Maven
+>       - Java 25
+>       - Spring Boot 4.0.6
+>       - Group: `cl.duoc`
+>       - Artifact: `microservice-name`
+>    2. Add the following dependencies:
+>       - Lombok
+>       - Validation
+>       - Spring Boot DevTools
+>       - Spring Web
+>       - SpringDoc
+>       - Spring Data JPA
+>       - Driver Mysql
+>       - Flyway Migration
+>       - Spring Reactive Web
+>       - Spring Security
+> 3. Copy the files into the microservice repository:
+>    - `.env.example`
+>    - `.gitattributes`
+>    - `.gitignore`
+>    - `Dockerfile`
+>    - `compose.yml`
+>    - `src/main/resources/application-dev.properties`
+>    - `src/main/resources/application-prod.properties`
+>    - `src/main/resources/application.properties`
+>    - `src/main/resources/logback-spring.xml`
+> 4. In the `.env.example`, change:
+>    - `SPRING_APP_NAME = FooMicroservice`
+>    - `MYSQL_DATABASE = foo`
+>    - `ARTIFACT_NAME = foo-api`
+> 5. Copy the security class files from `security` into the
+>    `src/main/java/foo/security` dir:
+>    - Correct the package path on both files:
+>
+>    > ```java
+>    > package cl.duoc.foo.security;
+>    > ```
+>
+> 6. Add the dependencies and plugins to the `pom.xml` file:
+>
+>    > ```xml
+>    > <dependency>
+>    > 	<groupId>net.logstash.logback</groupId>
+>    > 	<artifactId>logstash-logback-encoder</artifactId>
+>    > 	<version>7.4</version>
+>    > </dependency>
+>    > ```
+>    >
+>    > <details>
+>    > <summary> Click to expand </summary>
+>    >
+>    > ```xml
+>    > 	<build>
+>    > 		<plugins>
+>    > 			<plugin>
+>    > 				<groupId>com.diffplug.spotless</groupId>
+>    > 				<artifactId>spotless-maven-plugin</artifactId>
+>    > 				<version>2.43.0</version>
+>    > 				<configuration>
+>    > 					<java>
+>    > 						<licenseHeader>
+>    > 							<content><![CDATA[/*
+>    > 								* Copyright © $YEAR DuocUC FullStack 1
+>    > 								* Eduardo Bray
+>    > 								* Rodrigo Callealta
+>    > 								* Fernando Villalobos
+>    > 								*/
+>    > 								]]></content>
+>    > 						</licenseHeader>
+>    > 						<palantirJavaFormat>
+>    > 							<version>2.90.0</version>
+>    > 							<style>PALANTIR</style>
+>    > 							<formatJavadoc>true</formatJavadoc>
+>    > 						</palantirJavaFormat>
+>    > 					</java>
+>    > 					<formats>
+>    > 						<format>
+>    > 							<includes>
+>    > 								<include>**/*.properties</include>
+>    > 							</includes>
+>    > 							<trimTrailingWhitespace />
+>    > 							<endWithNewline />
+>    > 						</format>
+>    > 						<format>
+>    > 							<includes>
+>    > 								<include>**/*.md</include>
+>    > 							</includes>
+>    > 							<trimTrailingWhitespace />
+>    > 							<endWithNewline />
+>    > 						</format>
+>    > 						<format>
+>    > 							<includes>
+>    > 								<include>compose.yml</include>
+>    > 							</includes>
+>    > 							<indent>
+>    > 								<spaces>true</spaces>
+>    > 								<spacesPerTab>2</spacesPerTab>
+>    > 							</indent>
+>    > 							<trimTrailingWhitespace />
+>    > 							<endWithNewline />
+>    > 						</format>
+>    > 						<format>
+>    > 							<includes>
+>    > 								<include>pom.xml</include>
+>    > 								<include>**/*.xml</include>
+>    > 							</includes>
+>    > 							<excludes>
+>    > 								<exclude>**/logback-spring.xml</exclude>
+>    > 							</excludes>
+>    > 							<eclipseWtp>
+>    > 								<type>XML</type>
+>    > 							</eclipseWtp>
+>    > 							<indent>
+>    > 								<tabs>true</tabs>
+>    > 								<spacesPerTab>4</spacesPerTab>
+>    > 							</indent>
+>    > 						</format>
+>    > 					</formats>
+>    > 				</configuration>
+>    > 				<executions>
+>    > 					<execution>
+>    > 						<goals>
+>    > 							<goal>apply</goal>
+>    > 						</goals>
+>    > 						<phase>validate</phase>
+>    > 					</execution>
+>    > 				</executions>
+>    > 			</plugin>
+>    > 		</plugins>
+>    > 	</build>
+>    > ```
+>    >
+>    > </details>
+>
+> 7. Add the artifact name in the `pom.xml`:
+>
+>    ```xml
+>    <build>
+>    	<finalName>foo-api</finalName>
+>    		etc ...
+>    ```
+>
+> 8. Add the exclude to the application class:
+>
+>    ```java
+>    @SpringBootApplication(exclude = {UserDetailsServiceAutoConfiguration.class})
+>    public class FooApplication {
+>       // etc...
+>    ```
+>
+> </details>
+
+## Design
+
+<img width="1994" height="1600" alt="architecture_v1" src="https://github.com/user-attachments/assets/e6ad8770-021e-465f-bfa1-4fae5c6693e4" />
+
+## Microservices
+
+The application uses a Microservice architecture. This are the current
+microservices with they descriptions.
+
+| Name              | Repository                                                            | Domain     | Description                                   |
+| ----------------- | --------------------------------------------------------------------- | ---------- | --------------------------------------------- |
+| Auth              | [polirritmico/auth-api](https://github.com/polirritmico/auth-api)     | System     | Handle user authentication & provides the JWT |
+| Users             | ToDo                                                                  | System     |                                               |
+| Sales             | [polirritmico/sales-api](https://github.com/polirritmico/sales-api)   | Accounting | Handle sales data                             |
+| Invoice           | [Fervivi/invoice-api](https://github.com/Fervivi/invoice-api)         | Accounting | Invoice management                            |
+| AccountingManager | ToDo                                                                  | Accounting |                                               |
+| Carts             | ToDo                                                                  | Store      |                                               |
+| Products          | ToDo                                                                  | Store      |                                               |
+| StoreManager      | ToDo                                                                  | Store      |                                               |
+| Pets              | [lironscallealta/invoice-api](https://github.com/Fervivi/invoice-api) | Clinic     | Generates billing docs                        |
+| Appoinments       | ToDo                                                                  | Clinic     |                                               |
+| Veterinarian      | ToDo                                                                  | Clinic     |                                               |
+| VetManager        | ToDo                                                                  | Clinic     |                                               |
+
+---
+
 ## Tech Stack
 
 ### Infrastructure:
@@ -152,6 +342,9 @@ And also copy the Spring Boot properties files to the corresponding paths:
 
 Add the plugin into the project's `pom.xml` file:
 
+<details>
+<summary> Click to expand </summary>
+
 ```xml
 	<build>
 		<plugins>
@@ -233,6 +426,8 @@ Add the plugin into the project's `pom.xml` file:
 		</plugins>
 	</build>
 ```
+
+</details>
 
 With this, on every project build the source files should be formatted by the
 plugin.
@@ -324,33 +519,16 @@ code lives in `main`.
 Optional body allowed but wrap lines at 72 characters. Explain _what_ and _why_,
 not _how_.
 
----
+## Deployment & Production settings
 
-## Design
+Add the artifact name to the `pom.xml`. This is needed by the `Dockerfile`
+script:
 
-The application uses a Microservice architecture. This are the current
-microservices with they descriptions.
-
-## Microservices
-
-| Name              | Repository                                                            | Domain     | Description                                   |
-| ----------------- | --------------------------------------------------------------------- | ---------- | --------------------------------------------- |
-| Auth              | [polirritmico/auth-api](https://github.com/polirritmico/auth-api)     | System     | Handle user authentication & provides the JWT |
-| Users             | ToDo                                                                  | System     |                                               |
-| Sales             | [polirritmico/sales-api](https://github.com/polirritmico/sales-api)   | Accounting | Handle sales data                             |
-| Invoice           | [Fervivi/invoice-api](https://github.com/Fervivi/invoice-api)         | Accounting | Invoice management                            |
-| AccountingManager | ToDo                                                                  | Accounting |                                               |
-| Carts             | ToDo                                                                  | Store      |                                               |
-| Products          | ToDo                                                                  | Store      |                                               |
-| StoreManager      | ToDo                                                                  | Store      |                                               |
-| Pets              | [lironscallealta/invoice-api](https://github.com/Fervivi/invoice-api) | Clinic     | Generates billing docs                        |
-| Appoinments       | ToDo                                                                  | Clinic     |                                               |
-| Veterinarian      | ToDo                                                                  | Clinic     |                                               |
-| VetManager        | ToDo                                                                  | Clinic     |                                               |
-
-## Microservices Interaction Architecture Diagram
-
-<img width="1994" height="1600" alt="architecture_v1" src="https://github.com/user-attachments/assets/e6ad8770-021e-465f-bfa1-4fae5c6693e4" />
+```xml
+<build>
+	<finalName>foo-api</finalName>
+etc ...
+```
 
 ---
 
