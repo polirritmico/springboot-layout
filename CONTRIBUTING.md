@@ -105,3 +105,10 @@ Modelos principales:
 
 - User: Entidad de negocio con los datos de identidad de los usuarios,
   información de contacto y atributos del perfil.
+
+---
+
+## Contenerización
+
+Esta es la configuración de la red interna de los microservicios. Este modelo se
+replica en cada instancia:
