@@ -156,7 +156,7 @@ microservices to unify workflows between developers.
 >
 >    ```xml
 >    <build>
->    	<finalName>foo-api</finalName>
+>    	<finalName>app-microservice</finalName>
 >    		etc ...
 >    ```
 >
