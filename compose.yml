@@ -10,7 +10,7 @@ services:
     environment:
       MYSQL_HOST: db
     networks:
-      - fullstack_default
+      - fullstack_network
     depends_on:
       db:
         condition: service_healthy
@@ -30,7 +30,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
-      - fullstack_default
+      - fullstack_network
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 15m
@@ -49,7 +49,7 @@ services:
       PMA_HOST: db
       PMA_PORT: 3306
     networks:
-      - fullstack_default
+      - fullstack_network
     depends_on:
       db:
         condition: service_healthy
@@ -57,5 +57,6 @@ volumes:
   mysql_data:
 
 networks:
-  fullstack_default:
-    name: fullstack_default
+  fullstack_network:
+    name: ${DOCKER_DOMAIN_NETWORK:-fullstack_network}
+    external: true
