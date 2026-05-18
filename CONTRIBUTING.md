@@ -112,3 +112,5 @@ Modelos principales:
 
 Esta es la configuración de la red interna de los microservicios. Este modelo se
 replica en cada instancia:
+
+<img width="1416" height="891" alt="network" src="https://github.com/user-attachments/assets/fa00bcc6-9b09-4f5d-9932-4d9ade1960cc" />
