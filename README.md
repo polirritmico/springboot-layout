@@ -60,6 +60,15 @@ microservices to unify workflows between developers.
 >
 >    > ```xml
 >    > <dependency>
+>    > 	<groupId>com.auth0</groupId>
+>    > 	<artifactId>java-jwt</artifactId>
+>    > 	<version>4.5.2</version>
+>    > </dependency>
+>    >
+>    > ```
+>    >
+>    > ```xml
+>    > <dependency>
 >    > 	<groupId>net.logstash.logback</groupId>
 >    > 	<artifactId>logstash-logback-encoder</artifactId>
 >    > 	<version>7.4</version>
