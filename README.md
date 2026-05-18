@@ -161,7 +161,7 @@ microservices to unify workflows between developers.
 >    >
 >    > </details>
 >
-> 7. Add the artifact name in the `pom.xml`:
+> 7. Add this artifact name in the `pom.xml` (do not change the value):
 >
 >    ```xml
 >    <build>
@@ -169,7 +169,8 @@ microservices to unify workflows between developers.
 >    		etc ...
 >    ```
 >
-> 8. Add the exclude to the application class:
+> 8. Add the `exclude` to the application class in
+>    (`src/main/java/cl/duoc/foo/`):
 >
 >    ```java
 >    @SpringBootApplication(exclude = {UserDetailsServiceAutoConfiguration.class})
@@ -535,7 +536,7 @@ script:
 
 ```xml
 <build>
-	<finalName>foo-api</finalName>
+	<finalName>app-microservice</finalName>
 etc ...
 ```
 
