@@ -60,4 +60,3 @@ volumes:
 networks:
   fullstack_network:
     name: ${DOCKER_DOMAIN_NETWORK:-fullstack_network}
-    external: true
