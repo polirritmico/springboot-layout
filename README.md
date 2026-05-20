@@ -198,7 +198,7 @@ microservices with they descriptions.
 | AccountingManager | ToDo                                                                    | Accounting |                                               |
 | Carts             | ToDo                                                                    | Store      |                                               |
 | Products          | [Fervivi/product-api](https://github.com/Fervivi/product-api)           | Store      | Manage product catalog                        |
-| StoreManager      | ToDo                                                                    | Store      |                                               |
+| StoreManager      | [Fervivi/store-manager-api](https://github.com/Fervivi/store-manager-api)| Store     | Coordinates store oper. between microservices |
 | Pets              | [lironscallealta/pets-api](https://github.com/lironscallealta/pets-api) | Clinic     | Manages pets data                             |
 | Appoinments       | ToDo                                                                    | Clinic     |                                               |
 | Veterinarian      | ToDo                                                                    | Clinic     |                                               |
