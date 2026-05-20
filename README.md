@@ -189,20 +189,20 @@ microservices to unify workflows between developers.
 The application uses a Microservice architecture. This are the current
 microservices with they descriptions.
 
-| Name              | Repository                                                              | Domain     | Description                                   |
-| ----------------- | ----------------------------------------------------------------------- | ---------- | --------------------------------------------- |
-| Auth              | [polirritmico/auth-api](https://github.com/polirritmico/auth-api)       | System     | Handle user authentication & provides the JWT |
-| Users             | ToDo                                                                    | System     |                                               |
-| Sales             | [polirritmico/sales-api](https://github.com/polirritmico/sales-api)     | Accounting | Handle sales data                             |
-| Invoice           | [Fervivi/invoice-api](https://github.com/Fervivi/invoice-api)           | Accounting | Generates billing docs                        |
-| AccountingManager | ToDo                                                                    | Accounting |                                               |
-| Carts             | ToDo                                                                    | Store      |                                               |
-| Products          | [Fervivi/product-api](https://github.com/Fervivi/product-api)           | Store      | Manage product catalog                        |
-| StoreManager      | [Fervivi/store-manager-api](https://github.com/Fervivi/store-manager-api)| Store     | Coordinates store oper. between microservices |
-| Pets              | [lironscallealta/pets-api](https://github.com/lironscallealta/pets-api) | Clinic     | Manages pets data                             |
-| Appoinments       | ToDo                                                                    | Clinic     |                                               |
-| Veterinarian      | ToDo                                                                    | Clinic     |                                               |
-| VetManager        | ToDo                                                                    | Clinic     |                                               |
+| Name              | Repository                                                                      | Domain     | Description                                        |
+| ----------------- | ------------------------------------------------------------------------------- | ---------- | -------------------------------------------------- |
+| Auth              | [polirritmico/auth-api](https://github.com/polirritmico/auth-api)               | System     | Handle user authentication & provides the JWT      |
+| Users             | ToDo                                                                            | System     |                                                    |
+| Sales             | [polirritmico/sales-api](https://github.com/polirritmico/sales-api)             | Accounting | Handle sales data                                  |
+| Invoice           | [Fervivi/invoice-api](https://github.com/Fervivi/invoice-api)                   | Accounting | Generates billing docs                             |
+| AccountingManager | ToDo                                                                            | Accounting |                                                    |
+| Carts             | [polirritmico/carts-api](https://github.com/polirritmico/carts-api)             | Store      | Handle store carts operations and data             |
+| Products          | [Fervivi/product-api](https://github.com/Fervivi/product-api)                   | Store      | Manage product catalog                             |
+| StoreManager      | [Fervivi/store-manager-api](https://github.com/Fervivi/store-manager-api)       | Store      | Coordinates store oper. between microservices      |
+| Pets              | [lironscallealta/pets-api](https://github.com/lironscallealta/pets-api)         | Clinic     | Manages pets data                                  |
+| Appoinments       | ToDo                                                                            | Clinic     |                                                    |
+| Veterinarian      | ToDo                                                                            | Clinic     |                                                    |
+| VetManager        | [polirritmico/vet-manager-api](https://github.com/polirritmico/vet-manager-api) | Clinic     | Transform domain usecases into microservices calls |
 
 ---
 
