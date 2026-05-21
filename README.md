@@ -479,6 +479,25 @@ to provide project-agnostic exception handling.
 Just copy the `src/main/cl/duoc/foo/exception/` package into the project. Adjust
 all `foo` to the microservice package name.
 
+### Misc tools
+
+This repository provides some utility scripts that may be useful.
+
+#### Makefile
+
+Copy it into the microservice project root dir and check the available targets
+with:
+
+```bash
+make help
+```
+
+By default (`make`), it starts the containers and the Spring Boot project.
+
+> [!INFO]
+>
+> This Makefile requires GNU Make to be installed (available by default on WSL).
+
 ## 🏗️ Development workflow
 
 The project follows a trunk-based workflow on the `dev` branch. Production ready
