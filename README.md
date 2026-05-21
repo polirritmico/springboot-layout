@@ -47,7 +47,6 @@ microservices to unify workflows between developers.
 > 4. In the `.env.example`, change:
 >    - `SPRING_APP_NAME = FooMicroservice`
 >    - `MYSQL_DATABASE = foo`
->    - `ARTIFACT_NAME = foo-api`
 > 5. Copy the security class files from `security` into the
 >    `src/main/java/foo/security` dir:
 >    - Correct the package path on both files:
