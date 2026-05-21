@@ -471,6 +471,14 @@ Add the dependency to the `pom.xml` file.
 		</dependency>
 ```
 
+### Exceptions
+
+Check the provided exceptions package. It contains all the needed functionality
+to provide project-agnostic exception handling.
+
+Just copy the `src/main/cl/duoc/foo/exception/` package into the project. Adjust
+all `foo` to the microservice package name.
+
 ## 🏗️ Development workflow
 
 The project follows a trunk-based workflow on the `dev` branch. Production ready
