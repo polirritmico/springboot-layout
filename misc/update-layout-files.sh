@@ -14,4 +14,4 @@ cp ${LAYOUT}/.gitignore ./
 cp ${LAYOUT}/Dockerfile ./
 cp ${LAYOUT}/compose.yml ./
 cp ${LAYOUT}/src/main/resources/* src/main/resources/
-cp -r ${LAYOUT}/src/cl/duoc/foo/exception src/cl/duoc/*/exception
+cp -r ${LAYOUT}/src/main/java/cl/duoc/foo/exception src/main/java/cl/duoc/*/exception
