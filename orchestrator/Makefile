@@ -1,21 +1,21 @@
 # FullStack1 Duoc 2026
 # Project orchestrator Makefile v0.1
 
-REPOS := \
-	auth-api:https://github.com/polirritmico/auth-api \
-	usuarios-api:https://github.com/lironscallealta/usuarios-api \
-	sales-api:https://github.com/polirritmico/sales-api \
-	invoice-api:https://github.com/Fervivi/invoice-api \
-	accounting-manager-api:https://github.com/lironscallealta/accounting-manager-api \
-	carts-api:https://github.com/polirritmico/carts-api \
-	product-api:https://github.com/Fervivi/product-api \
-	store-manager-api:https://github.com/Fervivi/store-manager-api \
-	pets-api:https://github.com/lironscallealta/pets-api \
-	appointments-api:https://github.com/polirritmico/appointments-api \
-	vets-api:https://github.com/lironscallealta/vets-api \
-	vet-manager-api:https://github.com/polirritmico/vet-manager-api
+REPO_URLS := \
+	https://github.com/polirritmico/auth-api \
+	https://github.com/lironscallealta/usuarios-api \
+	https://github.com/polirritmico/sales-api \
+	https://github.com/Fervivi/invoice-api \
+	https://github.com/lironscallealta/accounting-manager-api \
+	https://github.com/polirritmico/carts-api \
+	https://github.com/Fervivi/product-api \
+	https://github.com/Fervivi/store-manager-api \
+	https://github.com/lironscallealta/pets-api \
+	https://github.com/polirritmico/appointments-api \
+	https://github.com/lironscallealta/vets-api \
+	https://github.com/polirritmico/vet-manager-api
 
-SERVICES := auth-api usuarios-api sales-api invoice-api accounting-manager-api carts-api product-api store-manager-api pets-api appointments-api vets-api vet-manager-api
+SERVICES := $(notdir $(REPO_URLS))
 
 FULLSTACK_DB_DIR := mysql-init
 FULLSTACK_DB_FILE := $(FULLSTACK_DB_DIR)/init.sql
@@ -34,9 +34,8 @@ run: clone-all db-init
 	docker compose up --build
 
 clone-all:
-	@for repo in $(REPOS); do \
-		dir=$${repo%%:*}; \
-		url=$${repo#*:}; \
+	@for url in $(REPO_URLS); do \
+		dir=$$(basename $$url); \
 		if [ ! -d "$$dir" ]; then \
 			git clone $$url $$dir; \
 		fi; \
