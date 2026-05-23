@@ -1,0 +1,257 @@
+services:
+  auth-api:
+    build:
+      context: ./auth-api
+      target: production
+    ports:
+      - "8081:8080"
+    env_file:
+      - ./auth-api/.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: auth
+      SPRING_ENV: dev
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  usuarios-api:
+    build:
+      context: ./usuarios-api
+      target: production
+    ports:
+      - "8082:8080"
+    env_file:
+      - ./usuarios-api/.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: usuarios
+      SPRING_ENV: dev
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  sales-api:
+    build:
+      context: ./sales-api
+      target: production
+    ports:
+      - "8083:8080"
+    env_file:
+      - ./sales-api/.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: sales
+      SPRING_ENV: dev
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  invoice-api:
+    build:
+      context: ./invoice-api
+      target: production
+    ports:
+      - "8084:8080"
+    env_file:
+      - ./invoice-api/.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: invoice
+      SPRING_ENV: dev
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  accounting-manager-api:
+    build:
+      context: ./accounting-manager-api
+      target: production
+    ports:
+      - "8085:8080"
+    env_file:
+      - ./accounting-manager-api/.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: accounting_manager
+      SPRING_ENV: dev
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  carts-api:
+    build:
+      context: ./carts-api
+      target: production
+    ports:
+      - "8086:8080"
+    env_file:
+      - ./carts-api/.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: carts
+      SPRING_ENV: dev
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  product-api:
+    build:
+      context: ./product-api
+      target: production
+    ports:
+      - "8087:8080"
+    env_file:
+      - ./product-api/.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: products
+      SPRING_ENV: dev
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  store-manager-api:
+    build:
+      context: ./store-manager-api
+      target: production
+    ports:
+      - "8088:8080"
+    env_file:
+      - ./store-manager-api/.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: store_manager
+      SPRING_ENV: dev
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  pets-api:
+    build:
+      context: ./pets-api
+      target: production
+    ports:
+      - "8089:8080"
+    env_file:
+      - ./pets-api/.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: pets
+      SPRING_ENV: dev
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  appointments-api:
+    build:
+      context: ./appointments-api
+      target: production
+    ports:
+      - "8090:8080"
+    env_file:
+      - ./appointments-api/.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: appointments
+      SPRING_ENV: dev
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  vets-api:
+    build:
+      context: ./vets-api
+      target: production
+    ports:
+      - "8091:8080"
+    env_file:
+      - ./vets-api/.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: vets
+      SPRING_ENV: dev
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  vet-manager-api:
+    build:
+      context: ./vet-manager-api
+      target: production
+    ports:
+      - "8092:8080"
+    env_file:
+      - ./vet-manager-api/.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: vet_manager
+      SPRING_ENV: dev
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:lts
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - global_mysql_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    networks:
+      - fullstack_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 15m
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+      start_interval: 1s
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8099:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  global_mysql_data:
+
+networks:
+  fullstack_network:
+    name: fullstack_network
