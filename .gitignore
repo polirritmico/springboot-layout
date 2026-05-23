@@ -98,4 +98,3 @@ build/
 
 logs/*
 .env
-orchestrator/*-api/
