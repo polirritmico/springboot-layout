@@ -191,7 +191,7 @@ microservices with they descriptions.
 | Name              | Repository                                                                                          | Domain     | Description                                                          |
 | ----------------- | --------------------------------------------------------------------------------------------------- | ---------- | -------------------------------------------------------------------- |
 | Auth              | [polirritmico/auth-api](https://github.com/polirritmico/auth-api)                                   | System     | Handle user authentication & provides the JWT                        |
-| Users             | [lironscallealta/usuarios-api](https://github.com/lironscallealta/usuarios-api)                     | System     | Manages user CRUD, roles, and contact data                           |
+| Users             | [lironscallealta/users-api](https://github.com/lironscallealta/users-api)                           | System     | Manages user CRUD, roles, and contact data                           |
 | Sales             | [polirritmico/sales-api](https://github.com/polirritmico/sales-api)                                 | Accounting | Handle sales data                                                    |
 | Invoice           | [Fervivi/invoice-api](https://github.com/Fervivi/invoice-api)                                       | Accounting | Generates billing docs                                               |
 | AccountingManager | [lironscallealta/accounting-manager-api](https://github.com/lironscallealta/accounting-manager-api) | Accounting | Orchestrates purchases, billing views, and void operations           |
