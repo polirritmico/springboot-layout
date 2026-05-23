@@ -17,17 +17,17 @@ services:
       db:
         condition: service_healthy
 
-  usuarios-api:
+  users-api:
     build:
-      context: ./usuarios-api
+      context: ./users-api
       target: production
     ports:
       - "8082:8080"
     env_file:
-      - ./usuarios-api/.env
+      - ./users-api/.env
     environment:
       MYSQL_HOST: db
-      MYSQL_DATABASE: usuarios
+      MYSQL_DATABASE: users
       SPRING_ENV: dev
     networks:
       - fullstack_network

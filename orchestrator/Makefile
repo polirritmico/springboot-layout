@@ -3,7 +3,7 @@
 
 REPO_URLS := \
 	https://github.com/polirritmico/auth-api \
-	https://github.com/lironscallealta/usuarios-api \
+	https://github.com/lironscallealta/users-api \
 	https://github.com/polirritmico/sales-api \
 	https://github.com/Fervivi/invoice-api \
 	https://github.com/lironscallealta/accounting-manager-api \
@@ -20,17 +20,34 @@ SERVICES := $(notdir $(REPO_URLS))
 FULLSTACK_DB_DIR := mysql-init
 FULLSTACK_DB_FILE := $(FULLSTACK_DB_DIR)/init.sql
 
-.PHONY: help run clean clone-all db-init
+.PHONY: help setup build up start stop run clean clone-all db-init
 
 help:
 	@echo "Available targets:"
 	@echo "  help      : Show this list"
-	@echo "  run       : Full setup. Clones repos, initializes DB script, and runs compose"
-	@echo "  clone-all : Fetch missing microservices and seed .env files"
-	@echo "  db-init   : Generate the multi-schema SQL initialization script"
+	@echo "  setup     : Prepares the workspace (clones repos and builds init.sql)"
+	@echo "  build     : Compiles docker images for all services (runs setup automatically)"
+	@echo "  up        : Runs the containers in the foreground"
+	@echo "  start     : Runs the containers detached in the background"
+	@echo "  stop      : Stops active containers without wiping data"
+	@echo "  run       : One-shot command to clone, generate scripts, build, and run in foreground"
 	@echo "  clean     : Teardown. Stops containers, wipes volumes, repos, and scripts"
 
-run: clone-all db-init
+setup: clone-all db-init
+
+build: setup
+	docker compose build
+
+up:
+	docker compose up
+
+start:
+	docker compose up -d
+
+stop:
+	docker compose down
+
+run: setup
 	docker compose up --build
 
 clone-all:
@@ -47,7 +64,7 @@ clone-all:
 db-init:
 	@mkdir -p $(FULLSTACK_DB_DIR)
 	@echo "CREATE DATABASE IF NOT EXISTS auth;" > $(FULLSTACK_DB_FILE)
-	@echo "CREATE DATABASE IF NOT EXISTS usuarios;" >> $(FULLSTACK_DB_FILE)
+	@echo "CREATE DATABASE IF NOT EXISTS users;" >> $(FULLSTACK_DB_FILE)
 	@echo "CREATE DATABASE IF NOT EXISTS sales;" >> $(FULLSTACK_DB_FILE)
 	@echo "CREATE DATABASE IF NOT EXISTS invoice;" >> $(FULLSTACK_DB_FILE)
 	@echo "CREATE DATABASE IF NOT EXISTS accounting_manager;" >> $(FULLSTACK_DB_FILE)
