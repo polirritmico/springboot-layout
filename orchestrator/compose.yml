@@ -1,3 +1,14 @@
+x-common-env: &common-env
+  HOST_DB_PORT: 3306
+  MYSQL_HOST: db
+  MYSQL_PASSWORD: password
+  MYSQL_USER: user
+  SPRING_ENV: dev
+  SPRING_JWT_ISSUER: login-service
+  SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
+  SPRING_JWT_SECRET: secret-key
+  SPRING_LOG_LEVEL: WARN
+
 services:
   auth-api:
     build:
@@ -6,176 +17,12 @@ services:
     ports:
       - "8000:8080"
     environment:
-      SPRING_APP_NAME: auth-api
+      <<: *common-env
       HOST_PORT: 8080
-      HOST_DB_PORT: 3306
-      SPRING_ENV: dev
-      SPRING_LOG_LEVEL: WARN
-      SPRING_JWT_SECRET: secret-key
-      SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
-      SPRING_JWT_ISSUER: login-service
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
       MYSQL_DATABASE: auth
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      SPRING_APP_NAME: auth-api
       SPRING_JWT_EXPIRATION: 86400000
-    networks:
-      - fullstack_network
-    depends_on:
-      db:
-        condition: service_healthy
-
-  users-api:
-    build:
-      context: ./users-api
-      target: production
-    ports:
-      - "8001:8080"
-    environment:
-      SPRING_APP_NAME: users-api
-      HOST_PORT: 8080
-      HOST_DB_PORT: 3306
-      SPRING_ENV: dev
-      SPRING_LOG_LEVEL: WARN
-      SPRING_JWT_SECRET: secret-key
-      SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
-      SPRING_JWT_ISSUER: login-service
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: users
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    networks:
-      - fullstack_network
-    depends_on:
-      db:
-        condition: service_healthy
-
-  sales-api:
-    build:
-      context: ./sales-api
-      target: production
-    ports:
-      - "8002:8080"
-    environment:
-      SPRING_APP_NAME: sales-api
-      HOST_PORT: 8080
-      HOST_DB_PORT: 3306
-      SPRING_ENV: dev
-      SPRING_LOG_LEVEL: WARN
-      SPRING_JWT_SECRET: secret-key
-      SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
-      SPRING_JWT_ISSUER: login-service
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: sales
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    networks:
-      - fullstack_network
-    depends_on:
-      db:
-        condition: service_healthy
-
-  invoice-api:
-    build:
-      context: ./invoice-api
-      target: production
-    ports:
-      - "8003:8080"
-    environment:
-      SPRING_APP_NAME: invoice-api
-      HOST_PORT: 8080
-      HOST_DB_PORT: 3306
-      SPRING_ENV: dev
-      SPRING_LOG_LEVEL: WARN
-      SPRING_JWT_SECRET: secret-key
-      SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
-      SPRING_JWT_ISSUER: login-service
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: invoice
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    networks:
-      - fullstack_network
-    depends_on:
-      db:
-        condition: service_healthy
-
-  carts-api:
-    build:
-      context: ./carts-api
-      target: production
-    ports:
-      - "8004:8080"
-    environment:
-      SPRING_APP_NAME: carts-api
-      HOST_PORT: 8080
-      HOST_DB_PORT: 3306
-      SPRING_ENV: dev
-      SPRING_LOG_LEVEL: WARN
-      SPRING_JWT_SECRET: secret-key
-      SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
-      SPRING_JWT_ISSUER: login-service
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: carts
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    networks:
-      - fullstack_network
-    depends_on:
-      db:
-        condition: service_healthy
-
-  product-api:
-    build:
-      context: ./product-api
-      target: production
-    ports:
-      - "8005:8080"
-    environment:
-      SPRING_APP_NAME: product-api
-      HOST_PORT: 8080
-      HOST_DB_PORT: 3306
-      SPRING_ENV: dev
-      SPRING_LOG_LEVEL: WARN
-      SPRING_JWT_SECRET: secret-key
-      SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
-      SPRING_JWT_ISSUER: login-service
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: product
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    networks:
-      - fullstack_network
-    depends_on:
-      db:
-        condition: service_healthy
-
-  pets-api:
-    build:
-      context: ./pets-api
-      target: production
-    ports:
-      - "8006:8080"
-    environment:
-      SPRING_APP_NAME: pets-api
-      HOST_PORT: 8080
-      HOST_DB_PORT: 3306
-      SPRING_ENV: dev
-      SPRING_LOG_LEVEL: WARN
-      SPRING_JWT_SECRET: secret-key
-      SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
-      SPRING_JWT_ISSUER: login-service
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: pets
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      SPRING_JWT_PUBLIC: /api/v1/health,/api/v1/auth,/v3/api-docs/**,/swagger-ui/**
     networks:
       - fullstack_network
     depends_on:
@@ -187,21 +34,29 @@ services:
       context: ./appointments-api
       target: production
     ports:
-      - "8007:8080"
+      - "8001:8080"
     environment:
-      SPRING_APP_NAME: appointments-api
+      <<: *common-env
       HOST_PORT: 8080
-      HOST_DB_PORT: 3306
-      SPRING_ENV: dev
-      SPRING_LOG_LEVEL: WARN
-      SPRING_JWT_SECRET: secret-key
-      SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
-      SPRING_JWT_ISSUER: login-service
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
       MYSQL_DATABASE: appointments
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      SPRING_APP_NAME: appointments-api
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  pets-api:
+    build:
+      context: ./pets-api
+      target: production
+    ports:
+      - "8002:8080"
+    environment:
+      <<: *common-env
+      HOST_PORT: 8080
+      MYSQL_DATABASE: pets
+      SPRING_APP_NAME: pets-api
     networks:
       - fullstack_network
     depends_on:
@@ -213,78 +68,12 @@ services:
       context: ./vets-api
       target: production
     ports:
-      - "8008:8080"
+      - "8003:8080"
     environment:
-      SPRING_APP_NAME: vets-api
+      <<: *common-env
       HOST_PORT: 8080
-      HOST_DB_PORT: 3306
-      SPRING_ENV: dev
-      SPRING_LOG_LEVEL: WARN
-      SPRING_JWT_SECRET: secret-key
-      SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
-      SPRING_JWT_ISSUER: login-service
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
       MYSQL_DATABASE: vets
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    networks:
-      - fullstack_network
-    depends_on:
-      db:
-        condition: service_healthy
-
-  store-manager-api:
-    build:
-      context: ./store-manager-api
-      target: production
-    ports:
-      - "8009:8080"
-    environment:
-      SPRING_APP_NAME: store-manager-api
-      HOST_PORT: 8080
-      HOST_DB_PORT: 3306
-      SPRING_ENV: dev
-      SPRING_LOG_LEVEL: WARN
-      SPRING_JWT_SECRET: secret-key
-      SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
-      SPRING_JWT_ISSUER: login-service
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: store_manager
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      SERVICE_PRODUCTS_BASE_URL: http://product-api:8080
-      SERVICE_SALES_BASE_URL: http://sales-api:8080
-      SERVICE_CARTS_BASE_URL: http://carts-api:8080
-    networks:
-      - fullstack_network
-    depends_on:
-      db:
-        condition: service_healthy
-
-  accounting-manager-api:
-    build:
-      context: ./accounting-manager-api
-      target: production
-    ports:
-      - "8010:8080"
-    environment:
-      SPRING_APP_NAME: accounting-manager-api
-      HOST_PORT: 8080
-      HOST_DB_PORT: 3306
-      SPRING_ENV: dev
-      SPRING_LOG_LEVEL: WARN
-      SPRING_JWT_SECRET: secret-key
-      SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
-      SPRING_JWT_ISSUER: login-service
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: accounting_manager
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      SERVICE_INVOICE_BASE_URL: http://invoice-api:8080
-      SERVICE_SALES_BASE_URL: http://sales-api:8080
+      SPRING_APP_NAME: vets-api
     networks:
       - fullstack_network
     depends_on:
@@ -296,21 +85,12 @@ services:
       context: ./vet-manager-api
       target: production
     ports:
-      - "8011:8080"
+      - "8004:8080"
     environment:
-      SPRING_APP_NAME: vet-manager-api
+      <<: *common-env
       HOST_PORT: 8080
-      HOST_DB_PORT: 3306
-      SPRING_ENV: dev
-      SPRING_LOG_LEVEL: WARN
-      SPRING_JWT_SECRET: secret-key
-      SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
-      SPRING_JWT_ISSUER: login-service
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: vet_manager
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      SPRING_APP_NAME: vet-manager-api
+      SPRING_JWT_PUBLIC: /appointments/v3/api-docs,/pets/v3/api-docs,/vets/v3/api-docs,/v3/api-docs/**,/swagger-ui/**
       SERVICE_APPOINTMENTS_BASE_URL: http://appointments-api:8080
       SERVICE_PETS_BASE_URL: http://pets-api:8080
       SERVICE_VETS_BASE_URL: http://vets-api:8080
@@ -326,8 +106,6 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
     volumes:
       - global_mysql_data:/var/lib/mysql
       - mysql_init_volume:/docker-entrypoint-initdb.d
