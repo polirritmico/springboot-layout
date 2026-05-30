@@ -1,2 +1,3 @@
 *-api/
 mysql-init/
+*.sql
