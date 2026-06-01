@@ -27,22 +27,21 @@ DOCKER_COMPOSE := docker compose --env-file /dev/null
 
 help:
 	@echo "Available targets:"
-	@echo "  help      : Show this list"
+	@echo "  run       : One-shot command to clone, generate scripts, build, and run in foreground"
+	@echo "  detached  : Runs the containers detached in the background"
+	@echo "  stop      : Stops active containers without wiping data"
+	@echo "  clean     : Teardown. Stops containers, wipes volumes, and init scripts"
+	@echo "  clean-full: Deep teardown. Also wipes cloned repositories"
 	@echo "  setup     : Prepares the workspace (clones repos and builds init.sql)"
 	@echo "  build     : Compiles docker images for all services (runs setup automatically)"
-	@echo "  up        : Runs the containers in the foreground"
-	@echo "  detached     : Runs the containers detached in the background"
-	@echo "  stop      : Stops active containers without wiping data"
-	@echo "  run       : One-shot command to clone, generate scripts, build, and run in foreground"
-	@echo "  clean     : Teardown. Stops containers, wipes volumes, repos, and scripts"
+	@echo "  clone     : Clones all required service repositories"
+	@echo "  db-init   : Generates database initialization script"
+	@echo "  help      : Show this list"
 
 setup: clone db-init
 
 build: setup
 	$(DOCKER_COMPOSE) build
-
-up:
-	$(DOCKER_COMPOSE) up
 
 detached:
 	$(DOCKER_COMPOSE) up -d
