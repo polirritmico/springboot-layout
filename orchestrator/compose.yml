@@ -22,24 +22,92 @@ services:
       MYSQL_DATABASE: auth
       SPRING_APP_NAME: auth-api
       SPRING_JWT_EXPIRATION: 86400000
-      SPRING_JWT_PUBLIC: /api/v1/health,/api/v1/auth,/v3/api-docs/**,/swagger-ui/**
+      SPRING_JWT_PUBLIC: /api/v1/health,/v3/api-docs/**,/swagger-ui/**
     networks:
       - fullstack_network
     depends_on:
       db:
         condition: service_healthy
 
-  appointments-api:
+  users-api:
     build:
-      context: ./appointments-api
+      context: ./users-api
       target: production
     ports:
       - "8001:8080"
     environment:
       <<: *common-env
       HOST_PORT: 8080
-      MYSQL_DATABASE: appointments
-      SPRING_APP_NAME: appointments-api
+      MYSQL_DATABASE: users
+      SPRING_APP_NAME: users-api
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  sales-api:
+    build:
+      context: ./sales-api
+      target: production
+    ports:
+      - "8002:8080"
+    environment:
+      <<: *common-env
+      HOST_PORT: 8080
+      MYSQL_DATABASE: sales
+      SPRING_APP_NAME: sales-api
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  invoice-api:
+    build:
+      context: ./invoice-api
+      target: production
+    ports:
+      - "8003:8080"
+    environment:
+      <<: *common-env
+      HOST_PORT: 8080
+      MYSQL_DATABASE: invoice
+      SPRING_APP_NAME: invoice-api
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  carts-api:
+    build:
+      context: ./carts-api
+      target: production
+    ports:
+      - "8004:8080"
+    environment:
+      <<: *common-env
+      HOST_PORT: 8080
+      MYSQL_DATABASE: carts
+      SPRING_APP_NAME: carts-api
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  product-api:
+    build:
+      context: ./product-api
+      target: production
+    ports:
+      - "8005:8080"
+    environment:
+      <<: *common-env
+      HOST_PORT: 8080
+      MYSQL_DATABASE: product
+      SPRING_APP_NAME: product-api
     networks:
       - fullstack_network
     depends_on:
@@ -51,7 +119,7 @@ services:
       context: ./pets-api
       target: production
     ports:
-      - "8002:8080"
+      - "8006:8080"
     environment:
       <<: *common-env
       HOST_PORT: 8080
@@ -63,12 +131,29 @@ services:
       db:
         condition: service_healthy
 
+  appointments-api:
+    build:
+      context: ./appointments-api
+      target: production
+    ports:
+      - "8007:8080"
+    environment:
+      <<: *common-env
+      HOST_PORT: 8080
+      MYSQL_DATABASE: appointments
+      SPRING_APP_NAME: appointments-api
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
   vets-api:
     build:
       context: ./vets-api
       target: production
     ports:
-      - "8003:8080"
+      - "8008:8080"
     environment:
       <<: *common-env
       HOST_PORT: 8080
@@ -80,12 +165,51 @@ services:
       db:
         condition: service_healthy
 
+  store-manager-api:
+    build:
+      context: ./store-manager-api
+      target: production
+    ports:
+      - "8009:8080"
+    environment:
+      <<: *common-env
+      HOST_PORT: 8080
+      MYSQL_DATABASE: store_manager
+      SPRING_APP_NAME: store-manager-api
+      CARTS_API_BASE_URL: http://carts-api:8080/api/v1/carts
+      PRODUCTS_API_BASE_URL: http://product-api:8080/api/v1/products
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  accounting-manager-api:
+    build:
+      context: ./accounting-manager-api
+      target: production
+    ports:
+      - "8010:8080"
+    environment:
+      <<: *common-env
+      HOST_PORT: 8080
+      MYSQL_DATABASE: accounting_manager
+      SPRING_APP_NAME: accounting-manager-api
+      SALES_API_BASE_URL: http://sales-api:8080/api/v1/sales
+      INVOICES_API_BASE_URL: http://invoice-api:8080/api/v1/invoices
+      USERS_API_BASE_URL: http://users-api:8080/api/v1/users
+    networks:
+      - fullstack_network
+    depends_on:
+      db:
+        condition: service_healthy
+
   vet-manager-api:
     build:
       context: ./vet-manager-api
       target: production
     ports:
-      - "8004:8080"
+      - "8011:8080"
     environment:
       <<: *common-env
       HOST_PORT: 8080

@@ -3,18 +3,17 @@
 #
 REPO_URLS := \
 	https://github.com/polirritmico/auth-api \
-	https://github.com/polirritmico/appointments-api \
-	https://github.com/lironscallealta/pets-api \
-	https://github.com/lironscallealta/vets-api \
-	https://github.com/polirritmico/vet-manager-api \
-	https://github.com/polirritmico/auth-api \
 	https://github.com/lironscallealta/users-api \
 	https://github.com/polirritmico/sales-api \
 	https://github.com/Fervivi/invoice-api \
 	https://github.com/polirritmico/carts-api \
 	https://github.com/Fervivi/product-api \
+	https://github.com/polirritmico/appointments-api \
+	https://github.com/lironscallealta/pets-api \
+	https://github.com/lironscallealta/vets-api \
 	https://github.com/Fervivi/store-manager-api \
-	https://github.com/lironscallealta/accounting-manager-api
+	https://github.com/lironscallealta/accounting-manager-api \
+	https://github.com/polirritmico/vet-manager-api
 
 SERVICES := $(notdir $(REPO_URLS))
 
@@ -81,6 +80,7 @@ db-init:
 
 clean:
 	$(DOCKER_COMPOSE) down -v
+	rm -f $(DB_INIT_SCRIPT)
 
 clean-full: clean
 	rm -rf $(SERVICES) $(DB_INIT_SCRIPT) mysql-init
