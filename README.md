@@ -483,25 +483,47 @@ all `foo` to the microservice package name.
 
 ### Eureka discover
 
-1. Add the dependencies into the `pom.xml` file. The actuator is to get
-   operational information about the running microservice:
+1. Add the dependencies into the `pom.xml` file:
+
+   ```xml
+   <properties>
+   	<spring-cloud.version>2025.1.2</spring-cloud.version>
+   </properties>
+
+   ```
+
+   The actuator is to get operational information about the running
+   microservice:
 
    ```xml
    <dependency>
    	<groupId>org.springframework.cloud</groupId>
    	<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
    </dependency>
-
    <dependency>
    	<groupId>org.springframework.boot</groupId>
    	<artifactId>spring-boot-starter-actuator</artifactId>
    </dependency>
    ```
 
+   ```xml
+   <dependencyManagement>
+   	<dependencies>
+   		<dependency>
+   			<groupId>org.springframework.cloud</groupId>
+   			<artifactId>spring-cloud-dependencies</artifactId>
+   			<version>${spring-cloud.version}</version>
+   			<type>pom</type>
+   			<scope>import</scope>
+   		</dependency>
+   	</dependencies>
+   </dependencyManagement>
+   ```
+
 2. Add the annotation to the main application class:
 
    ```java
-   @SpringFooApplication
+   @SpringBootApplication(exclude = {UserDetailsServiceAutoConfiguration.class})
    @EnableDiscoveryClient
    public class FooApplication {
    	public static void main(String[] args) {
