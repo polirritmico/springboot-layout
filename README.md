@@ -481,6 +481,44 @@ to provide project-agnostic exception handling.
 Just copy the `src/main/cl/duoc/foo/exception/` package into the project. Adjust
 all `foo` to the microservice package name.
 
+### Eureka discover
+
+1. Add the dependencies into the `pom.xml` file. The actuator is to get
+   operational information about the running microservice:
+
+   ```xml
+   <dependency>
+   	<groupId>org.springframework.cloud</groupId>
+   	<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+   </dependency>
+
+   <dependency>
+   	<groupId>org.springframework.boot</groupId>
+   	<artifactId>spring-boot-starter-actuator</artifactId>
+   </dependency>
+   ```
+
+2. Add the annotation to the main application class:
+
+   ```java
+   @SpringFooApplication
+   @EnableDiscoveryClient
+   public class FooApplication {
+   	public static void main(String[] args) {
+   		SpringApplication.run(FooApplication.class, args);
+   	}
+   }
+   ```
+
+3. Update the properties
+
+   ```properties
+   eureka.client.service-url.defaultZone=${SPRING_EUREKA_URL}
+   eureka.client.register-with-eureka=true
+   eureka.client.fetch-registry=true
+   eureka.instance.prefer-ip-address=true
+   ```
+
 ### Misc tools
 
 This repository provides some utility scripts that may be useful.
