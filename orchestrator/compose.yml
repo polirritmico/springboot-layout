@@ -47,6 +47,11 @@ services:
       SPRING_LOG_LEVEL: INFO
       HOST_PORT: 8080
       DOCKER_DOMAIN_NETWORK: fullstack_network
+      SERVICE_AUTH_ID: AuthMicroservice
+      SERVICE_ACCOUNTING_MANAGER_ID: AccountingManager
+      SERVICE_STORE_MANAGER_ID: StoreManager
+      SERVICE_VET_MANAGER_ID: VetManager
+
     networks:
       - fullstack_network
     depends_on:
