@@ -5,7 +5,7 @@ x-common-env: &common-env
   MYSQL_USER: user
   SPRING_ENV: dev
   SPRING_JWT_ISSUER: login-service
-  SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**
+  SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**,/actuator/**
   SPRING_JWT_SECRET: secret-key
   SPRING_LOG_LEVEL: WARN
   SPRING_EUREKA_URL: http://eureka-server:8123/eureka
@@ -17,9 +17,9 @@ services:
     ports:
       - "8123:8123"
     environment:
-      SPRING_APP_NAME: EurekaServer
+      <<: *common-env
+      SPRING_APP_NAME: Eureka-Server
       HOST_PORT: 8123
-      DOCKER_DOMAIN_NETWORK: fullstack_network
     networks:
       - fullstack_network
     healthcheck:
@@ -42,16 +42,13 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_ENV: dev
+      <<: *common-env
       SPRING_APP_NAME: ApiGateway
-      SPRING_LOG_LEVEL: INFO
       HOST_PORT: 8080
-      DOCKER_DOMAIN_NETWORK: fullstack_network
-      SERVICE_AUTH_ID: AuthMicroservice
-      SERVICE_ACCOUNTING_MANAGER_ID: AccountingManager
-      SERVICE_STORE_MANAGER_ID: StoreManager
-      SERVICE_VET_MANAGER_ID: VetManager
-
+      SERVICE_AUTH_ID: AuthMicroservice-dev
+      SERVICE_ACCOUNTING_MANAGER_ID: AccountingManager-dev
+      SERVICE_STORE_MANAGER_ID: StoreManager-dev
+      SERVICE_VET_MANAGER_ID: VetManager-dev
     networks:
       - fullstack_network
     depends_on:
@@ -70,10 +67,12 @@ services:
       MYSQL_DATABASE: auth
       SPRING_APP_NAME: AuthMicroservice
       SPRING_JWT_EXPIRATION: 86400000
-      SPRING_JWT_PUBLIC: /api/v1/health,/v3/api-docs/**,/swagger-ui/**
+      SPRING_JWT_PUBLIC: /api/v1/auth/health,/v3/api-docs/**,/swagger-ui/**,/actuator/**
     networks:
       - fullstack_network
     depends_on:
+      eureka-server:
+        condition: service_healthy
       db:
         condition: service_healthy
 
@@ -91,6 +90,8 @@ services:
     networks:
       - fullstack_network
     depends_on:
+      eureka-server:
+        condition: service_healthy
       db:
         condition: service_healthy
 
@@ -108,6 +109,8 @@ services:
     networks:
       - fullstack_network
     depends_on:
+      eureka-server:
+        condition: service_healthy
       db:
         condition: service_healthy
 
@@ -125,6 +128,8 @@ services:
     networks:
       - fullstack_network
     depends_on:
+      eureka-server:
+        condition: service_healthy
       db:
         condition: service_healthy
 
@@ -142,6 +147,8 @@ services:
     networks:
       - fullstack_network
     depends_on:
+      eureka-server:
+        condition: service_healthy
       db:
         condition: service_healthy
 
@@ -159,6 +166,8 @@ services:
     networks:
       - fullstack_network
     depends_on:
+      eureka-server:
+        condition: service_healthy
       db:
         condition: service_healthy
 
@@ -176,6 +185,8 @@ services:
     networks:
       - fullstack_network
     depends_on:
+      eureka-server:
+        condition: service_healthy
       db:
         condition: service_healthy
 
@@ -193,6 +204,8 @@ services:
     networks:
       - fullstack_network
     depends_on:
+      eureka-server:
+        condition: service_healthy
       db:
         condition: service_healthy
 
@@ -210,6 +223,8 @@ services:
     networks:
       - fullstack_network
     depends_on:
+      eureka-server:
+        condition: service_healthy
       db:
         condition: service_healthy
 
@@ -229,6 +244,8 @@ services:
     networks:
       - fullstack_network
     depends_on:
+      eureka-server:
+        condition: service_healthy
       db:
         condition: service_healthy
 
@@ -249,6 +266,8 @@ services:
     networks:
       - fullstack_network
     depends_on:
+      eureka-server:
+        condition: service_healthy
       db:
         condition: service_healthy
 
@@ -262,13 +281,15 @@ services:
       <<: *common-env
       HOST_PORT: 8080
       SPRING_APP_NAME: VetManager
-      SPRING_JWT_PUBLIC: /appointments/v3/api-docs,/pets/v3/api-docs,/vets/v3/api-docs,/v3/api-docs/**,/swagger-ui/**
-      SERVICE_APPOINTMENTS_BASE_URL: http://appointments-api:8080
-      SERVICE_PETS_BASE_URL: http://pets-api:8080
-      SERVICE_VETS_BASE_URL: http://vets-api:8080
+      SPRING_JWT_PUBLIC: /appointments/v3/api-docs,/pets/v3/api-docs,/vets/v3/api-docs,/v3/api-docs/**,/swagger-ui/**,/actuator/**
+      SERVICE_APPOINTMENTS_BASE_URL: http://appointments-api-dev:8080
+      SERVICE_PETS_BASE_URL: http://pets-api-dev:8080
+      SERVICE_VETS_BASE_URL: http://vets-api-dev:8080
     networks:
       - fullstack_network
     depends_on:
+      eureka-server:
+        condition: service_healthy
       db:
         condition: service_healthy
 
