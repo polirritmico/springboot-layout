@@ -532,14 +532,7 @@ all `foo` to the microservice package name.
    }
    ```
 
-3. Update the properties
-
-   ```properties
-   eureka.client.service-url.defaultZone=${SPRING_EUREKA_URL}
-   eureka.client.register-with-eureka=true
-   eureka.client.fetch-registry=true
-   eureka.instance.prefer-ip-address=true
-   ```
+3. Update the resource [properties files](src/main/resources).
 
 ### Misc tools
 
