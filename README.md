@@ -532,7 +532,46 @@ all `foo` to the microservice package name.
    }
    ```
 
-3. Update the resource [properties files](src/main/resources).
+### Tests
+
+1. Add the dependencies:
+
+   ```xml
+   <dependency>
+   	<groupId>org.springframework.boot</groupId>
+   	<artifactId>spring-boot-starter-test</artifactId>
+   	<scope>test</scope>
+   </dependency>
+   <dependency>
+   	<groupId>org.springframework.boot</groupId>
+   	<artifactId>spring-boot-starter-webmvc-test</artifactId>
+   	<scope>test</scope>
+   </dependency>
+   <dependency>
+   	<groupId>com.h2database</groupId>
+   	<artifactId>h2</artifactId>
+   	<scope>test</scope>
+   </dependency>
+   <dependency>
+   	<groupId>org.springframework.security</groupId>
+   	<artifactId>spring-security-test</artifactId>
+   	<scope>test</scope>
+   </dependency>
+   ```
+
+### Data Faker
+
+1. Add the dependencies
+
+   ```xml
+   <dependency>
+   	<groupId>net.datafaker</groupId>
+   	<artifactId>datafaker</artifactId>
+   	<version>2.5.4</version>
+   </dependency>
+   ```
+
+2. Update the resource [properties files](src/main/resources).
 
 ### Misc tools
 
