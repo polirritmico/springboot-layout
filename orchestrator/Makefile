@@ -22,6 +22,7 @@ INFRA_REPO_URLS := \
 ALL_REPO_URLS := $(API_REPO_URLS) $(INFRA_REPO_URLS)
 
 SERVICES := $(notdir $(API_REPO_URLS))
+ALL_REPO_DIRS := $(notdir $(ALL_REPO_URLS))
 
 DB_INIT_SCRIPT := init.sql
 DB_INIT_VOL := mysql_init_volume
@@ -88,4 +89,4 @@ clean:
 	rm -f $(DB_INIT_SCRIPT)
 
 clean-full: clean
-	rm -rf $(SERVICES) $(DB_INIT_SCRIPT) mysql-init
+	rm -rf $(ALL_REPO_DIRS) $(DB_INIT_SCRIPT) mysql-init
