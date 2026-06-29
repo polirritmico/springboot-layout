@@ -17,12 +17,40 @@ make run
 - **Database Access:** You can inspect the project databases via phpMyAdmin at
   `http://localhost:8088`. Use the credentials **user** and **password**.
 
+## Pseudo manual run
+
+For a more controlled startup approach follow this proceadure:
+
+1. Clone the repositories:
+
+   ```bash
+   make clone
+   ```
+
+2. Build the docker images:
+
+   ```bash
+   make build
+   ```
+
+3. Start the project:
+
+   ```bash
+   make start
+   ```
+
+> [!TIP]
+>
+> Use `make` to check all available targets.
+
 ## Services and Ports Layout
 
 Here are the current port mappings for the active services:
 
 | Service                    | External Port (Host) | Internal Port (Container) | Description                             |
 | :------------------------- | :------------------- | :------------------------ | :-------------------------------------- |
+| **Eureka Service**         | `8123`               | `8123`                    | Eureka                                  |
+| **API Gateway**            | `8080`               | `8080`                    | Project API gateway.                    |
 | **Auth API**               | `8000`               | `8080`                    | Auth microservice                       |
 | **Users API**              | `8001`               | `8080`                    | Users microservice                      |
 | **Sales API**              | `8002`               | `8080`                    | Sales microservice                      |
