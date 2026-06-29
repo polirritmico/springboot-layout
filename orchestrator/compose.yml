@@ -3,12 +3,21 @@ x-common-env: &common-env
   MYSQL_HOST: db
   MYSQL_PASSWORD: password
   MYSQL_USER: user
+
   SPRING_ENV: dev
   SPRING_JWT_ISSUER: login-service
   SPRING_JWT_PUBLIC: /v3/api-docs/**,/swagger-ui/**,/actuator/**
   SPRING_JWT_SECRET: secret-key
   SPRING_LOG_LEVEL: WARN
   SPRING_EUREKA_URL: http://eureka-server:8123/eureka
+
+  SERVICE_INVOICES_BASE_URL: lb://InvoicesMicroservice-dev
+  SERVICE_SALES_BASE_URL: lb://SalesMicroservice-dev
+  SERVICE_CARTS_BASE_URL: lb://CartsMicroservice-dev
+  SERVICE_PRODUCTS_BASE_URL: lb://ProductsMicroservice-dev
+  SERVICE_APPOINTMENTS_BASE_URL: lb://AppointmentsMicroservice-dev
+  SERVICE_PETS_BASE_URL: lb://PetsMicroservice-dev
+  SERVICE_VETS_BASE_URL: lb://VetsMicroservice-dev
 
 services:
   eureka-server:
@@ -67,7 +76,7 @@ services:
       MYSQL_DATABASE: auth
       SPRING_APP_NAME: AuthMicroservice
       SPRING_JWT_EXPIRATION: 86400000
-      SPRING_JWT_PUBLIC: /api/v1/auth/health,/v3/api-docs/**,/swagger-ui/**,/actuator/**
+      SPRING_JWT_PUBLIC: /api/v1/health,/v3/api-docs/**,/swagger-ui/**,/actuator/**
     networks:
       - fullstack_network
     depends_on:
@@ -124,7 +133,7 @@ services:
       <<: *common-env
       HOST_PORT: 8080
       MYSQL_DATABASE: invoice
-      SPRING_APP_NAME: InvoiceMicroservice
+      SPRING_APP_NAME: InvoicesMicroservice
     networks:
       - fullstack_network
     depends_on:
@@ -239,8 +248,7 @@ services:
       HOST_PORT: 8080
       MYSQL_DATABASE: store_manager
       SPRING_APP_NAME: StoreManager
-      CARTS_API_BASE_URL: http://carts-api:8080/api/v1/carts
-      PRODUCTS_API_BASE_URL: http://product-api:8080/api/v1/products
+      SPRING_JWT_PUBLIC: /carts/v3/api-docs,/products/v3/api-docs,/v3/api-docs/**,/swagger-ui/**,/actuator/**
     networks:
       - fullstack_network
     depends_on:
@@ -260,9 +268,7 @@ services:
       HOST_PORT: 8080
       MYSQL_DATABASE: accounting_manager
       SPRING_APP_NAME: AccountingManager
-      SALES_API_BASE_URL: http://sales-api:8080/api/v1/sales
-      INVOICES_API_BASE_URL: http://invoice-api:8080/api/v1/invoices
-      USERS_API_BASE_URL: http://users-api:8080/api/v1/users
+      SPRING_JWT_PUBLIC: /invoices/v3/api-docs,/sales/v3/api-docs,/v3/api-docs/**,/swagger-ui/**,/actuator/**
     networks:
       - fullstack_network
     depends_on:
@@ -282,9 +288,6 @@ services:
       HOST_PORT: 8080
       SPRING_APP_NAME: VetManager
       SPRING_JWT_PUBLIC: /appointments/v3/api-docs,/pets/v3/api-docs,/vets/v3/api-docs,/v3/api-docs/**,/swagger-ui/**,/actuator/**
-      SERVICE_APPOINTMENTS_BASE_URL: http://appointments-api-dev:8080
-      SERVICE_PETS_BASE_URL: http://pets-api-dev:8080
-      SERVICE_VETS_BASE_URL: http://vets-api-dev:8080
     networks:
       - fullstack_network
     depends_on:
