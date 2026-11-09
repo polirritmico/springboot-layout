@@ -55,6 +55,7 @@ services:
       SPRING_APP_NAME: ApiGateway
       HOST_PORT: 8080
       SERVICE_AUTH_ID: AuthMicroservice-dev
+      SERVICE_USERS_ID: UsersMicroservice-dev
       SERVICE_ACCOUNTING_MANAGER_ID: AccountingManager-dev
       SERVICE_STORE_MANAGER_ID: StoreManager-dev
       SERVICE_VET_MANAGER_ID: VetManager-dev
