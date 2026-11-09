@@ -8,12 +8,8 @@ API_REPO_URLS := \
 	https://github.com/Fervivi/invoice-api \
 	https://github.com/polirritmico/carts-api \
 	https://github.com/Fervivi/product-api \
-	https://github.com/polirritmico/appointments-api \
-	https://github.com/lironscallealta/pets-api \
-	https://github.com/lironscallealta/vets-api \
 	https://github.com/Fervivi/store-manager-api \
 	https://github.com/lironscallealta/accounting-manager-api \
-	https://github.com/polirritmico/vet-manager-api
 
 INFRA_REPO_URLS := \
     https://github.com/polirritmico/api-gateway \
