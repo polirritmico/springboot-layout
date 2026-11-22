@@ -19,8 +19,12 @@ x-common-env: &common-env
   SERVICE_PETS_BASE_URL: lb://PetsMicroservice-dev
   SERVICE_VETS_BASE_URL: lb://VetsMicroservice-dev
 
+x-service-defaults: &service-defaults
+  restart: ${RESTART_POLICY:-no}
+
 services:
   eureka-server:
+    <<: *service-defaults
     build:
       context: ./eureka-server
     ports:
@@ -46,6 +50,7 @@ services:
       retries: 5
 
   api-gateway:
+    <<: *service-defaults
     build:
       context: ./api-gateway
     ports:
@@ -57,6 +62,7 @@ services:
       CORS_ALLOWED_ORIGINS: http://localhost:3000,http://localhost:5173
       SERVICE_AUTH_ID: AuthMicroservice-dev
       SERVICE_USERS_ID: UsersMicroservice-dev
+      SERVICE_PRODUCTS_ID: ProductsMicroservice-dev
       SERVICE_ACCOUNTING_MANAGER_ID: AccountingManager-dev
       SERVICE_STORE_MANAGER_ID: StoreManager-dev
       SERVICE_VET_MANAGER_ID: VetManager-dev
@@ -67,6 +73,7 @@ services:
         condition: service_healthy
 
   auth-api:
+    <<: *service-defaults
     build:
       context: ./auth-api
       target: production
@@ -88,6 +95,7 @@ services:
         condition: service_healthy
 
   users-api:
+    <<: *service-defaults
     build:
       context: ./users-api
       target: production
@@ -107,6 +115,7 @@ services:
         condition: service_healthy
 
   sales-api:
+    <<: *service-defaults
     build:
       context: ./sales-api
       target: production
@@ -126,6 +135,7 @@ services:
         condition: service_healthy
 
   invoice-api:
+    <<: *service-defaults
     build:
       context: ./invoice-api
       target: production
@@ -145,6 +155,7 @@ services:
         condition: service_healthy
 
   carts-api:
+    <<: *service-defaults
     build:
       context: ./carts-api
       target: production
@@ -164,6 +175,7 @@ services:
         condition: service_healthy
 
   product-api:
+    <<: *service-defaults
     build:
       context: ./product-api
       target: production
@@ -183,6 +195,7 @@ services:
         condition: service_healthy
 
   store-manager-api:
+    <<: *service-defaults
     build:
       context: ./store-manager-api
       target: production
@@ -203,6 +216,7 @@ services:
         condition: service_healthy
 
   accounting-manager-api:
+    <<: *service-defaults
     build:
       context: ./accounting-manager-api
       target: production
@@ -223,6 +237,7 @@ services:
         condition: service_healthy
 
   db:
+    <<: *service-defaults
     image: mysql:lts
     ports:
       - "3306:3306"
@@ -242,6 +257,7 @@ services:
       start_interval: 1s
 
   phpmyadmin:
+    <<: *service-defaults
     image: phpmyadmin/phpmyadmin
     ports:
       - "8088:80"

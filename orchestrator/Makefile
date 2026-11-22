@@ -26,11 +26,15 @@ DB_USER ?= user
 DB_PASSWORD ?= password
 DOCKER_COMPOSE := docker compose --env-file /dev/null
 
+RESTART_POLICY ?= no
+export RESTART_POLICY
+
 .PHONY: help setup build up start stop run clean clone-all db-init
 
 help:
 	@echo "Available targets:"
 	@echo "  run       : One-shot command to clone, generate scripts, build, and run in foreground"
+	@echo "  run-deploy: Same as run, but sets restart policy to always for persistent deployments"
 	@echo "  detached  : Runs the containers detached in the background"
 	@echo "  stop      : Stops active containers without wiping data"
 	@echo "  clean     : Teardown. Stops containers, wipes volumes, and init scripts"
@@ -54,6 +58,9 @@ stop:
 
 run: setup
 	$(DOCKER_COMPOSE) up --build
+
+run-deploy: RESTART_POLICY = always
+run-deploy: run
 
 clone:
 	@for url in $(ALL_REPO_URLS); do \
