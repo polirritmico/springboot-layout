@@ -1,5 +1,16 @@
 # FullStack Microservices Orchestrator
 
+<!--toc:start-->
+
+- [FullStack Microservices Orchestrator](#fullstack-microservices-orchestrator)
+  - [Quick Start](#quick-start)
+  - [Pseudo manual run](#pseudo-manual-run)
+  - [Services and Ports Layout](#services-and-ports-layout)
+    - [Available Make Commands](#available-make-commands)
+  - [Database Architecture](#database-architecture)
+
+<!--toc:end-->
+
 This repository orchestrates the deployment of multiple Spring Boot
 microservices, a MySQL database, and phpMyAdmin using Docker Compose.
 
@@ -65,6 +76,89 @@ Here are the current port mappings for the active services:
 | **Vet Manager API**        | `8011`               | `8080`                    | Vet Manager microservice                |
 | **MySQL DB**               | `3306`               | `3306`                    | Main MySQL database hosting all schemas |
 | **phpMyAdmin**             | `8088`               | `80`                      | Web interface for MySQL database        |
+
+## Deploy
+
+This are the instructions to deploy a demo of the app on AWS EC2.
+
+1. Create a Security group with this rules:
+   - Inbound:
+     - For the front: Custom TCP, port `4173`, source `0.0.0.0/0`
+     - For the back: Custom TCP, port `8080`, source `0.0.0.0/0`
+     - For the database: Custom TCP, port `8088`, source `0.0.0.0/0`
+     - For administration: Type SSH, port `22`, source `0.0.0.0/0`
+   - Outbound:
+     - All traffic, port `All`, destionation `0.0.0.0/0`
+2. Create 2 Elastic IPs. Take note of the allocated addresses.
+3. Create a template, and launch 2 instances. On the next section are the
+   recommended specs, scripts and specific setup instructions. Both instances
+   should use the same Security Group created on 1.
+4. Attach one Elastic IP to each instance.
+5. Log into the **backend** and inside the `orchestrator` dir execute:
+   ```bash
+   ssh ubuntu@<backend-public-ip> -i jkiltro.pem
+   cd springboot-layout/orchestrator
+   CORS_ALLOWED_ORIGINS="http://x.x.x.x:4173" make deploy
+   ```
+   Replace with the proper **frontend** elastic ip (public).
+6. Log into the **frontend** and inside the repository and launch the front:
+   ```bash
+   ssh ubuntu@<frontend-public-ip> -i jkiltro.pem
+   cd fullstack-frontend
+   export VITE_JKILTRO_API="http://<backend-public-ip>:8080" && npm run build
+   nohup npm run preview -- --host 0.0.0.0 > frontend.log 2>&1 &
+   disown
+   ```
+
+### Backend Instance
+
+Recommended specs/setup:
+
+- T3 large (8gb)
+- Drive 24GB
+- Ubuntu server
+- Template user data initialization script:
+
+  ```bash
+  #!/usr/bin/env bash
+
+  set -euo pipefail
+
+  apt-get update -y
+  apt-get install -y make git
+
+  curl -fsSL https://get.docker.com | sh
+  usermod -aG docker ubuntu
+
+  su - ubuntu -c "git clone -b for-frontend https://github.com/polirritmico/springboot-layout.git /home/ubuntu/springboot-layout"
+  ```
+
+### Frontend Instance
+
+Recommended specs/setup:
+
+- T3 medium (4gb)
+- Drive 24GB
+- Ubuntu server
+- Template user data initialization script:
+
+  ```bash
+  #!/usr/bin/env bash
+  set -euo pipefail
+
+  export DEBIAN_FRONTEND=noninteractive
+
+  apt-get update -y
+  apt-get install -y make git curl ca-certificates
+
+  su - ubuntu -c 'git clone -b dev https://github.com/polirritmico/fullstack-frontend.git /home/ubuntu/fullstack-frontend'
+
+  su - ubuntu -c 'curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | bash'
+
+  su - ubuntu -c 'export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" && nvm install 26 && nvm alias default 26'
+
+  su - ubuntu -c 'export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" && cd /home/ubuntu/fullstack-frontend && npm install'
+  ```
 
 ### Available Make Commands
 
