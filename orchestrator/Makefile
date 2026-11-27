@@ -34,7 +34,7 @@ export RESTART_POLICY
 help:
 	@echo "Available targets:"
 	@echo "  run       : One-shot command to clone, generate scripts, build, and run in foreground"
-	@echo "  run-deploy: Same as run, but sets restart policy to always for persistent deployments"
+	@echo "  deploy    : Like run, but sets restart policy to always for persistent deployments"
 	@echo "  detached  : Runs the containers detached in the background"
 	@echo "  stop      : Stops active containers without wiping data"
 	@echo "  clean     : Teardown. Stops containers, wipes volumes, and init scripts"
@@ -59,8 +59,9 @@ stop:
 run: setup
 	$(DOCKER_COMPOSE) up --build
 
-run-deploy: RESTART_POLICY = always
-run-deploy: run
+deploy: RESTART_POLICY = always
+deploy: setup
+	$(DOCKER_COMPOSE) up -d --build
 
 clone:
 	@for url in $(ALL_REPO_URLS); do \
