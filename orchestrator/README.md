@@ -28,32 +28,6 @@ make run
 - **Database Access:** You can inspect the project databases via phpMyAdmin at
   `http://localhost:8088`. Use the credentials **user** and **password**.
 
-## Pseudo manual run
-
-For a more controlled startup approach follow this proceadure:
-
-1. Clone the repositories:
-
-   ```bash
-   make clone
-   ```
-
-2. Build the docker images:
-
-   ```bash
-   make build
-   ```
-
-3. Start the project:
-
-   ```bash
-   make start
-   ```
-
-> [!TIP]
->
-> Use `make` to check all available targets.
-
 ## Services and Ports Layout
 
 Here are the current port mappings for the active services:
@@ -79,49 +53,36 @@ Here are the current port mappings for the active services:
 
 ## Deploy
 
-This are the instructions to deploy a demo of the app on AWS EC2.
+These are the instructions to deploy a demo of the app on AWS EC2.
 
-1. Create a Security group with this rules:
-   - Inbound:
-     - For the front: Custom TCP, port `4173`, source `0.0.0.0/0`
-     - For the back: Custom TCP, port `8080`, source `0.0.0.0/0`
-     - For the database: Custom TCP, port `8088`, source `0.0.0.0/0`
-     - For administration: Type SSH, port `22`, source `0.0.0.0/0`
-   - Outbound:
-     - All traffic, port `All`, destionation `0.0.0.0/0`
-2. Create 2 Elastic IPs. Take note of the allocated addresses.
-3. Create a template, and launch 2 instances. On the next section are the
-   recommended specs, scripts and specific setup instructions. Both instances
-   should use the same Security Group created on 1.
-4. Attach one Elastic IP to each instance.
-5. Log into the **backend** and inside the `orchestrator` dir execute:
-   ```bash
-   ssh ubuntu@<backend-public-ip> -i jkiltro.pem
-   cd springboot-layout/orchestrator
-   CORS_ALLOWED_ORIGINS="http://x.x.x.x:4173" make deploy
-   ```
-   Replace with the proper **frontend** elastic ip (public).
-6. Log into the **frontend** and inside the repository and launch the front:
-   ```bash
-   ssh ubuntu@<frontend-public-ip> -i jkiltro.pem
-   cd fullstack-frontend
-   export VITE_JKILTRO_API="http://<backend-public-ip>:8080" && npm run build
-   nohup npm run preview -- --host 0.0.0.0 > frontend.log 2>&1 &
-   disown
-   ```
+### 1. Network Setup
 
-### Backend Instance
+1. Create a **Security Group** with the following rules:
+   - **Inbound:**
+     - Frontend: Custom TCP, port `4173`, source `0.0.0.0/0`
+     - Backend: Custom TCP, port `8080`, source `0.0.0.0/0`
+     - Database: Custom TCP, port `8088`, source `0.0.0.0/0`
+     - Administration: SSH, port `22`, source `0.0.0.0/0`
+   - **Outbound:**
+     - All traffic, port `All`, destination `0.0.0.0/0`
+2. Allocate **2 Elastic IPs** and take note of both addresses (one for the
+   backend, one for the frontend).
 
-Recommended specs/setup:
+### 2. Provision Instances
 
-- T3 large (8gb)
-- Drive 24GB
-- Ubuntu server
-- Template user data initialization script:
+Create a Launch Template (or configure each instance directly) using the specs
+below, attach the **Security Group** created in step 1 to both, and assign one
+**Elastic IP** to each instance after launch.
+
+#### Backend Instance
+
+- **Instance type:** `t3.large` (8 GB RAM)
+- **Storage:** 24 GB
+- **OS:** Ubuntu Server
+- **User data initialization script:**
 
   ```bash
   #!/usr/bin/env bash
-
   set -euo pipefail
 
   apt-get update -y
@@ -133,14 +94,12 @@ Recommended specs/setup:
   su - ubuntu -c "git clone -b for-frontend https://github.com/polirritmico/springboot-layout.git /home/ubuntu/springboot-layout"
   ```
 
-### Frontend Instance
+#### Frontend Instance
 
-Recommended specs/setup:
-
-- T3 medium (4gb)
-- Drive 24GB
-- Ubuntu server
-- Template user data initialization script:
+- **Instance type:** `t3.medium` (4 GB RAM)
+- **Storage:** 24 GB
+- **OS:** Ubuntu Server
+- **User data initialization script:**
 
   ```bash
   #!/usr/bin/env bash
@@ -160,7 +119,36 @@ Recommended specs/setup:
   su - ubuntu -c 'export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" && cd /home/ubuntu/fullstack-frontend && npm install'
   ```
 
-### Available Make Commands
+### 3. Start Services
+
+1. **Deploy the Backend:** Connect to the backend instance and start the
+   services using the **frontend** Elastic IP for CORS:
+
+   ```bash
+   ssh ubuntu@<backend-public-ip> -i jkiltro.pem
+   cd springboot-layout/orchestrator
+   CORS_ALLOWED_ORIGINS="http://<frontend-public-ip>:4173" make deploy
+   ```
+
+> [!NOTE]
+>
+> The backend startup takes around 10-15 minutes (?!) to complete.
+
+2. **Deploy the Frontend:** Connect to the frontend instance, configure the
+   **backend** Elastic IP, build, and run the preview server:
+   ```bash
+   ssh ubuntu@<frontend-public-ip> -i jkiltro.pem
+   cd fullstack-frontend && cp .env.development .env
+   export VITE_JKILTRO_API="http://<backend-public-ip>:8080" && npm run build
+   nohup npm run preview -- --host 0.0.0.0 > frontend.log 2>&1 &
+   disown
+   ```
+
+Done! Check the site in a browser through `http://<frontend-public-ip>:4173`.
+You could check the DB through the exposed **phpMyAdmin** container at
+`http://<backend-public-ip>:8088`.
+
+## Available Make Commands
 
 - `make run`: One-shot command to clone, generate scripts, build, and run in
   foreground
