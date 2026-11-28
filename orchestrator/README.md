@@ -1,85 +1,95 @@
-# FullStack Microservices Orchestrator
+# Orquestador de Microservicios FullStack
+
+Este repositorio orquesta el despliegue de los microservicios (Spring Boot), una
+base de datos MySQL y phpMyAdmin utilizando Docker Compose.
 
 <!--toc:start-->
 
-- [FullStack Microservices Orchestrator](#fullstack-microservices-orchestrator)
-  - [Quick Start](#quick-start)
-  - [Pseudo manual run](#pseudo-manual-run)
-  - [Services and Ports Layout](#services-and-ports-layout)
-    - [Available Make Commands](#available-make-commands)
-  - [Database Architecture](#database-architecture)
+- [Orquestador de Microservicios FullStack](#orquestador-de-microservicios-fullstack)
+  - [Inicio rápido (TL;DR)](#inicio-rápido-tldr)
+  - [Distribución de servicios y puertos](#distribución-de-servicios-y-puertos)
+  - [Despliegue (Deploy)](#despliegue-deploy)
+    - [1. Configuración de red](#1-configuración-de-red)
+    - [2. Aprovisionamiento de instancias](#2-aprovisionamiento-de-instancias)
+      - [Instancia backend](#instancia-backend)
+      - [Instancia frontend](#instancia-frontend)
+    - [3. Levantar servicios](#3-levantar-servicios)
+  - [Comandos Make disponibles](#comandos-make-disponibles)
+  - [Arquitectura de base de datos](#arquitectura-de-base-de-datos)
 
 <!--toc:end-->
 
-This repository orchestrates the deployment of multiple Spring Boot
-microservices, a MySQL database, and phpMyAdmin using Docker Compose.
+## Inicio rápido (TL;DR)
 
-## Quick Start
-
-Run the following command to clone all uncommented repositories, generate the
-database initialization script, build the images, and start the containers:
+Ejecutar el siguiente comando para clonar los repositorios, generar el script de
+inicialización de la base de datos, construir las imágenes y levantar los
+contenedores:
 
 ```bash
 make run
 ```
 
-- **Swagger UI:** All microservices have their API documentation available at
-  `/swagger-ui/index.html` on their respective host ports.
-- **Database Access:** You can inspect the project databases via phpMyAdmin at
-  `http://localhost:8088`. Use the credentials **user** and **password**.
+- **Swagger UI:** Todos los microservicios tienen su API documentada con swagger
+  disponible en `/swagger-ui/index.html` a través de sus respectivos puertos
+  expuestos.
+- **Acceso a la Base de Datos:** Se puede revisar la base de datos completa del
+  proyecto mediante **phpMyAdmin** en `http://localhost:8088`. Usar las
+  credenciales **user** y **password**.
 
-## Services and Ports Layout
+## Distribución de servicios y puertos
 
-Here are the current port mappings for the active services:
+Este es el mapa actual de los puertos que utiliza cada servicio:
 
-| Service                    | External Port (Host) | Internal Port (Container) | Description                             |
-| :------------------------- | :------------------- | :------------------------ | :-------------------------------------- |
-| **Eureka Service**         | `8123`               | `8123`                    | Eureka                                  |
-| **API Gateway**            | `8080`               | `8080`                    | Project API gateway.                    |
-| **Auth API**               | `8000`               | `8080`                    | Auth microservice                       |
-| **Users API**              | `8001`               | `8080`                    | Users microservice                      |
-| **Sales API**              | `8002`               | `8080`                    | Sales microservice                      |
-| **Invoice API**            | `8003`               | `8080`                    | Invoice microservice                    |
-| **Carts API**              | `8004`               | `8080`                    | Carts microservice                      |
-| **Product API**            | `8005`               | `8080`                    | Product microservice                    |
-| **Pets API**               | `8006`               | `8080`                    | Pets microservice                       |
-| **Appointments API**       | `8007`               | `8080`                    | Appointments microservice               |
-| **Vets API**               | `8008`               | `8080`                    | Vets microservice                       |
-| **Store Manager API**      | `8009`               | `8080`                    | Store Manager microservice              |
-| **Accounting Manager API** | `8010`               | `8080`                    | Accounting Manager microservice         |
-| **Vet Manager API**        | `8011`               | `8080`                    | Vet Manager microservice                |
-| **MySQL DB**               | `3306`               | `3306`                    | Main MySQL database hosting all schemas |
-| **phpMyAdmin**             | `8088`               | `80`                      | Web interface for MySQL database        |
+| Servicio                   | Puerto externo (Host) | Puerto interno (Contenedor) | Descripción                                          |
+| :------------------------- | :-------------------- | :-------------------------- | :--------------------------------------------------- |
+| **Eureka Service**         | `8123`                | `8123`                      | Eureka                                               |
+| **API Gateway**            | `8080`                | `8080`                      | API gateway del proyecto.                            |
+| **Auth API**               | `8000`                | `8080`                      | Microservicio de autenticación                       |
+| **Users API**              | `8001`                | `8080`                      | Microservicio de usuarios                            |
+| **Sales API**              | `8002`                | `8080`                      | Microservicio de ventas                              |
+| **Invoice API**            | `8003`                | `8080`                      | Microservicio de facturación                         |
+| **Carts API**              | `8004`                | `8080`                      | Microservicio de carritos                            |
+| **Product API**            | `8005`                | `8080`                      | Microservicio de productos                           |
+| **Pets API**               | `8006`                | `8080`                      | Microservicio de mascotas                            |
+| **Appointments API**       | `8007`                | `8080`                      | Microservicio de citas                               |
+| **Vets API**               | `8008`                | `8080`                      | Microservicio de veterinarios                        |
+| **Store Manager API**      | `8009`                | `8080`                      | Microservicio de gestión de tienda                   |
+| **Accounting Manager API** | `8010`                | `8080`                      | Microservicio de gestión contable                    |
+| **Vet Manager API**        | `8011`                | `8080`                      | Microservicio de gestión veterinaria                 |
+| **MySQL DB**               | `3306`                | `3306`                      | Base de datos MySQL principal que aloja los esquemas |
+| **phpMyAdmin**             | `8088`                | `80`                        | Interfaz web para la base de datos MySQL             |
 
-## Deploy
+## Despliegue (Deploy)
 
-These are the instructions to deploy a demo of the app on AWS EC2.
+A continuación se encuentran las instrucciones para desplegar una demo de la
+aplicación en AWS EC2:
 
-### 1. Network Setup
+### 1. Configuración de red
 
-1. Create a **Security Group** with the following rules:
-   - **Inbound:**
-     - Frontend: Custom TCP, port `4173`, source `0.0.0.0/0`
-     - Backend: Custom TCP, port `8080`, source `0.0.0.0/0`
-     - Database: Custom TCP, port `8088`, source `0.0.0.0/0`
-     - Administration: SSH, port `22`, source `0.0.0.0/0`
-   - **Outbound:**
-     - All traffic, port `All`, destination `0.0.0.0/0`
-2. Allocate **2 Elastic IPs** and take note of both addresses (one for the
-   backend, one for the frontend).
+1. Crear un **Security Group** con las siguientes reglas:
+   - **Inbound (Entrada):**
+     - **Frontend:** Custom TCP, puerto `4173`, origen `0.0.0.0/0`
+     - **Backend:** Custom TCP, puerto `8080`, origen `0.0.0.0/0`
+     - **Base de datos:** Custom TCP, puerto `8088`, origen `0.0.0.0/0`
+     - **Administración:** SSH, puerto `22`, origen `0.0.0.0/0`
+   - **Outbound (Salida):**
+     - Todo el tráfico (All traffic), puerto `All`, destino `0.0.0.0/0`
+2. Asignar **2 Elastic IPs** y tomar nota de ambas direcciones (una para el
+   backend y otra para el frontend).
 
-### 2. Provision Instances
+### 2. Aprovisionamiento de instancias
 
-Create a Launch Template (or configure each instance directly) using the specs
-below, attach the **Security Group** created in step 1 to both, and assign one
-**Elastic IP** to each instance after launch.
+Crear un _Launch Template_ (o configurar cada instancia directamente) usando las
+especificaciones que se detallan a continuación. Adjuntar el **Security Group**
+creado en el paso 1 a cada una y de la misma forma asociar una **Elastic IP** a
+cada instancia tras iniciarlas.
 
-#### Backend Instance
+#### Instancia backend
 
-- **Instance type:** `t3.large` (8 GB RAM)
-- **Storage:** 24 GB
+- **Tipo de instancia:** `t3.large` (8 GB RAM)
+- **Almacenamiento:** 24 GB
 - **OS:** Ubuntu Server
-- **User data initialization script:**
+- **Script de inicialización (User data):**
 
   ```bash
   #!/usr/bin/env bash
@@ -94,12 +104,12 @@ below, attach the **Security Group** created in step 1 to both, and assign one
   su - ubuntu -c "git clone -b for-frontend https://github.com/polirritmico/springboot-layout.git /home/ubuntu/springboot-layout"
   ```
 
-#### Frontend Instance
+#### Instancia frontend
 
-- **Instance type:** `t3.medium` (4 GB RAM)
-- **Storage:** 24 GB
+- **Tipo de instancia:** `t3.medium` (4 GB RAM)
+- **Almacenamiento:** 24 GB
 - **OS:** Ubuntu Server
-- **User data initialization script:**
+- **Script de inicialización (User data):**
 
   ```bash
   #!/usr/bin/env bash
@@ -119,10 +129,10 @@ below, attach the **Security Group** created in step 1 to both, and assign one
   su - ubuntu -c 'export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" && cd /home/ubuntu/fullstack-frontend && npm install'
   ```
 
-### 3. Start Services
+### 3. Levantar servicios
 
-1. **Deploy the Backend:** Connect to the backend instance and start the
-   services using the **frontend** Elastic IP for CORS:
+1. **Desplegar el backend:** Conectarse a la instancia del backend e iniciar los
+   servicios usando la Elastic IP del **frontend** para CORS:
 
    ```bash
    ssh ubuntu@<backend-public-ip> -i jkiltro.pem
@@ -132,10 +142,10 @@ below, attach the **Security Group** created in step 1 to both, and assign one
 
 > [!NOTE]
 >
-> The backend startup takes around 10-15 minutes (?!) to complete.
+> El arranque del backend tarda alrededor de 10-15 minutos (?!) en completarse.
 
-2. **Deploy the Frontend:** Connect to the frontend instance, configure the
-   **backend** Elastic IP, build, and run the preview server:
+2. **Desplegar el frontend:** Conectarse a la instancia del frontend, configurar
+   la Elastic IP del **backend**, compilar y levantar el servidor preview:
    ```bash
    ssh ubuntu@<frontend-public-ip> -i jkiltro.pem
    cd fullstack-frontend && cp .env.development .env
@@ -144,28 +154,38 @@ below, attach the **Security Group** created in step 1 to both, and assign one
    disown
    ```
 
-Done! Check the site in a browser through `http://<frontend-public-ip>:4173`.
-You could check the DB through the exposed **phpMyAdmin** container at
-`http://<backend-public-ip>:8088`.
+> _¡Está vivo!_
 
-## Available Make Commands
+Revisar el sitio en el navegador entrando a `http://<frontend-public-ip>:4173`.
+También, se puede revisar la base de datos a través del contenedor de
+**phpMyAdmin** expuesto en `http://<backend-public-ip>:8088`.
 
-- `make run`: One-shot command to clone, generate scripts, build, and run in
-  foreground
-- `make detached`: Runs the containers detached in the background
-- `make stop`: Stops active containers without wiping data
-- `make clean`: Teardown. Stops containers, wipes volumes, and init scripts
-- `make clean-full`: Deep teardown. Also wipes cloned repositories
-- `make setup`: Prepares the workspace (clones repos and builds init.sql)
-- `make build`: Compiles docker images for all services (runs setup
-  automatically)
-- `make clone`: Clones all required service repositories
-- `make db-init`: Generates database initialization script
-- `make help`: Show the list of available targets
+---
 
-## Database Architecture
+## Comandos Make disponibles
 
-A single MySQL container is spun up for the entire network. To ensure isolation,
-the `Makefile` dynamically creates an initialization script based on the active
-repositories. This script provisions a separate, dedicated database schema for
-each microservice upon startup via a Docker named volume (`mysql_init_volume`).
+- `make run`: Comando completo para clonar, generar scripts, construir y
+  ejecutar en primer plano
+- `make deploy`: Similar a run, pero define la política de reinicio a siempre
+  para deploys persistentes (ejecuta en segundo plano).
+- `make detached`: Ejecuta los contenedores en segundo plano (detached)
+- `make stop`: Detiene los contenedores activos sin borrar los datos
+- `make clean`: Limpieza (teardown). Detiene contenedores, elimina volúmenes y
+  scripts de inicialización
+- `make clean-full`: Limpieza profunda. También elimina los repositorios
+  clonados
+- `make setup`: Prepara el espacio de trabajo (clona repos y genera el
+  `init.sql`)
+- `make build`: Compila las imágenes Docker de todos los servicios (ejecuta
+  `setup` automáticamente)
+- `make clone`: Clona todos los repositorios de servicios requeridos
+- `make db-init`: Genera el script de inicialización de la base de datos
+- `make help`: Muestra la lista de comandos disponibles
+
+## Arquitectura de base de datos
+
+Se levanta un único contenedor MySQL para toda la red. Para garantizar el
+aislamiento, el `Makefile` crea dinámicamente un script de inicialización basado
+en los repositorios activos. Este script aprovisiona un esquema de base de datos
+separado y dedicado para cada microservicio al arrancar mediante un volumen
+nombrado de Docker (`mysql_init_volume`).
